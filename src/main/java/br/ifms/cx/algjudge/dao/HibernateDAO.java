@@ -8,7 +8,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Hibernates DAO Gen�rico
+ * Classe de operacoes de banco de dados generico
+ * 
  */
 @SuppressWarnings("unchecked")
 public class HibernateDAO<T> {
