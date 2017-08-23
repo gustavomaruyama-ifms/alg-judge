@@ -5,6 +5,6 @@
 <hibernate-configuration>
 	<session-factory>
 		<!-- Mapeamento das classes Java -->
-		<mapping class="br.ifms.cx.algjudge.domain.Coordenada" />
+		<mapping class="br.ifms.cx.algjudge.domain.Problema" />
 	</session-factory>
 </hibernate-configuration>
