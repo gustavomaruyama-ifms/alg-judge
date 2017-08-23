@@ -12,7 +12,7 @@
 	http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
 	<!-- Scan do pacote para processar annotations -->
-	<context:component-scan base-package="br.ifms.cx.petrastreio">
+	<context:component-scan base-package="br.ifms.cx.algjudge">
 		<context:include-filter type="annotation"
 			expression="org.aspectj.lang.annotation.Aspect" />
 	</context:component-scan>
