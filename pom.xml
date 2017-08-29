@@ -54,8 +54,8 @@
     <dependencies>
         <!--Portugol Online-->
         <dependency>
-            <groupId>vinyanalista.portugol</groupId>
-            <artifactId>portugol-online</artifactId>
+            <groupId>br.com.vinyanalista</groupId>
+            <artifactId>portugol</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${basedir}/lib/portugol-online.jar</systemPath>
