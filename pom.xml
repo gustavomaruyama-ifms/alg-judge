@@ -52,6 +52,15 @@
     </build>
 
     <dependencies>
+        <!--Portugol Online-->
+        <dependency>
+            <groupId>vinyanalista.portugol</groupId>
+            <artifactId>portugol-online</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/portugol-online.jar</systemPath>
+        </dependency>
+        
         <!-- Servlet -->
         <dependency>
             <groupId>javax.servlet</groupId>
