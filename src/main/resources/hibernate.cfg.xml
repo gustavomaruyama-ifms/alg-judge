@@ -7,5 +7,6 @@
 		<!-- Mapeamento das classes Java -->
 		<mapping class="br.ifms.cx.algjudge.domain.Problema" />
                 <mapping class="br.ifms.cx.algjudge.domain.Submissao" />
+         
 	</session-factory>
 </hibernate-configuration>

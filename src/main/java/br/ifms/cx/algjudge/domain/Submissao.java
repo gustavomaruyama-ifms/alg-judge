@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -26,6 +28,7 @@ public class Submissao {
     @GeneratedValue(generator = "gen_seq_submissao", strategy = GenerationType.SEQUENCE)
     private Long id;
     private String codigoFonte;
+    @Temporal(TemporalType.DATE)
     private Date dataEnvio;
     private Long tempoExecucao;
     @Enumerated(EnumType.STRING)
