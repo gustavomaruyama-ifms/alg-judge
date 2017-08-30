@@ -1,5 +1,6 @@
 package br.ifms.cx.algjudge.rest;
 
+import br.com.vinyanalista.portugol.interpretador.Interpretador;
 import br.ifms.cx.algjudge.dao.ProblemaDAO;
 import br.ifms.cx.algjudge.domain.Problema;
 import br.ifms.cx.algjudge.domain.Response;
@@ -36,7 +37,7 @@ public class ProblemaResource {
     public Response inserirProblema(Problema problema) {
         try {
             db.persistirProblema(problema);     
-            return Response.Ok("Problema incluio com sucesso");
+            return Response.Ok("Problema incluio com sucesso");               
         } catch (Exception ex) {
             return Response.Error(ex.getMessage());
         }
