@@ -1,9 +1,11 @@
 package br.ifms.cx.algjudge.rest;
 
-import br.com.vinyanalista.portugol.interpretador.Interpretador;
 import br.ifms.cx.algjudge.dao.ProblemaDAO;
 import br.ifms.cx.algjudge.domain.Problema;
 import br.ifms.cx.algjudge.domain.Response;
+import br.ifms.cx.algjudge.domain.SituacaoSubmissaoEnum;
+import br.ifms.cx.algjudge.domain.Submissao;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -18,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Path("/problema")
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -29,15 +30,15 @@ public class ProblemaResource {
     private ProblemaDAO db;
 
     public ProblemaResource() {
-     
+
     }
 
     @POST
     @Transactional
     public Response inserirProblema(Problema problema) {
         try {
-            db.persistirProblema(problema);     
-            return Response.Ok("Problema incluio com sucesso");               
+            db.persistirProblema(problema);
+            return Response.Ok("Problema incluio com sucesso");
         } catch (Exception ex) {
             return Response.Error(ex.getMessage());
         }
