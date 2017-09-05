@@ -7,6 +7,8 @@ package br.ifms.cx.algjudge.rest;
 
 import br.ifms.cx.algjudge.domain.Response;
 import br.ifms.cx.algjudge.domain.Submissao;
+import br.ifms.cx.algjudge.domain.Usuario;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
  * @author Gustavo
  */
 @Path("/submissao")
+@RolesAllowed(value = {Usuario.PAPEL_ALUNO,Usuario.PAPEL_PROFESSOR})
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Component

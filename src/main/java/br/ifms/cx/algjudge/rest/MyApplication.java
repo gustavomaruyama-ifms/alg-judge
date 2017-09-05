@@ -13,7 +13,6 @@ public class MyApplication extends Application {
     public Map<String, Object> getProperties() {
         Map<String, Object> properties = new HashMap<>();
         properties.put("jersey.config.server.provider.packages", "br.ifms.cx.algjudge");
-
         return properties;
     }
 
@@ -21,6 +20,7 @@ public class MyApplication extends Application {
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> resources = new HashSet<Class<?>>();
         resources.add(CorsFilter.class);
+        resources.add(AuthenticationFilter.class);
         return resources;
     }
 

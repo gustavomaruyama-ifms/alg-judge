@@ -5,10 +5,12 @@
  */
 package br.ifms.cx.algjudge.domain;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +25,11 @@ import javax.persistence.TemporalType;
 @Entity
 public class Submissao {
 
+    public static final String SITUACAO_EM_EXECUCAO = "Em Execução";
+    public static final String SITUACAO_ACEITO = "Aceito";
+    public static final String SITUACAO_RESPOSTA_ERRADA = "Resposta Errada";
+    public static final String SITUACAO_ERRO_DE_SINTAX = "Erro de Sintax";
+
     @Id
     @SequenceGenerator(sequenceName = "seq_submissao", name = "gen_seq_submissao", allocationSize = 1, initialValue = 1)
     @GeneratedValue(generator = "gen_seq_submissao", strategy = GenerationType.SEQUENCE)
@@ -31,15 +38,25 @@ public class Submissao {
     @Temporal(TemporalType.DATE)
     private Date dataEnvio;
     private Long tempoExecucao;
-    @Enumerated(EnumType.STRING)
-    private SituacaoSubmissaoEnum situacao;
+    @Column(nullable = false)
+    private String situacao;
 
-    public SituacaoSubmissaoEnum getSituacao() {
-        return situacao;
-    }
-
-    public void setSituacao(SituacaoSubmissaoEnum situacao) {
-        this.situacao = situacao;
+    /**
+     * Metodo que retorna uma {@link List} com todos as situações de uma
+     * {@link Submissao} em formato {@link String}
+     *
+     * @return {@link List<Submissao>}
+     * @throws IllegalArgumentException
+     * @throws IllegalAccessException
+     */
+    public static List<String> getSituacoes() throws IllegalArgumentException, IllegalAccessException {
+        List<String> situacoes = new ArrayList<String>();
+        for (Field f : Usuario.class.getFields()) {
+            if (f.getName().contains("SITUACAO")) {
+                situacoes.add(f.get(null).toString());
+            }
+        }
+        return situacoes;
     }
 
     public Long getId() {

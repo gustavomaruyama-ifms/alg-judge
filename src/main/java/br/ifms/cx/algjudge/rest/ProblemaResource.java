@@ -3,10 +3,9 @@ package br.ifms.cx.algjudge.rest;
 import br.ifms.cx.algjudge.dao.ProblemaDAO;
 import br.ifms.cx.algjudge.domain.Problema;
 import br.ifms.cx.algjudge.domain.Response;
-import br.ifms.cx.algjudge.domain.SituacaoSubmissaoEnum;
-import br.ifms.cx.algjudge.domain.Submissao;
-import java.util.Date;
+import br.ifms.cx.algjudge.domain.Usuario;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Path("/problema")
+@RolesAllowed(value = {Usuario.PAPEL_ADMINISTRADOR, Usuario.PAPEL_PROFESSOR})
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Component
