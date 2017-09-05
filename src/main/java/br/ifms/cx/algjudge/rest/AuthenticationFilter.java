@@ -99,7 +99,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     }
 
     private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
-        Usuario usuario = usuarioDAO.buscarProblemaPorEmail(username);
+        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(username);
 
         if (usuario == null) {
             return false;

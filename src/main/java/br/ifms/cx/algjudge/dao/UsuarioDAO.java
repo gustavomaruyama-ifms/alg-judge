@@ -21,7 +21,7 @@ public class UsuarioDAO extends HibernateDAO<Problema> {
      * @param id
      * @return 
      */
-    public Usuario buscarProblemaPorEmail(String email) {
+    public Usuario buscarUsuarioPorEmail(String email) {
         Query query = super.createQuery("FROM Usuario u WHERE u.email LIKE :email");
         query.setParameter("email", email);
         query.setMaxResults(1);
