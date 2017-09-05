@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Path("/problema")
-@RolesAllowed(value = {Usuario.PAPEL_ADMINISTRADOR, Usuario.PAPEL_PROFESSOR})
+@RolesAllowed({Usuario.PAPEL_ADMINISTRADOR, Usuario.PAPEL_PROFESSOR})
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Component
