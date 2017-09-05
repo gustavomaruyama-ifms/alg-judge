@@ -41,13 +41,13 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
     private static final String AUTHENTICATION_SCHEME = "Basic";
-    private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED)
-            .entity("Você não tem permissão para acessar este serviço.").build();
-    private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN)
-            .entity("Acesso bloqueado para todos os usuÃ¡rios").build();
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
+        Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED)
+                .entity("Você não tem permissão para acessar este serviço.").build();
+        Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN)
+                .entity("Acesso bloqueado para todos os usuÃ¡rios").build();
         Method method = resourceInfo.getResourceMethod();
         //Access allowed for all
         if (!method.isAnnotationPresent(PermitAll.class)) {
