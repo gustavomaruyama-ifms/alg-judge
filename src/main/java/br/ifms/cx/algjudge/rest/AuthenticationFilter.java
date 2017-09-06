@@ -73,7 +73,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             final String encodedUserPassword = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
 
             //Decode username and password
-            String usernameAndPassword = new String(Base64.decode(encodedUserPassword.getBytes()));;
+            String usernameAndPassword = new String(Base64.decode(encodedUserPassword.getBytes()));
 
             //Split username and password tokens
             final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
@@ -88,6 +88,23 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             if (method.isAnnotationPresent(RolesAllowed.class)) {
                 RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
                 Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
+
+                for (String s : rolesSet) {
+                    System.out.println(s);
+                }
+
+                //Is user valid?
+                if (!isUserAllowed(username, password, rolesSet)) {
+                    requestContext.abortWith(ACCESS_DENIED);
+                    return;
+                }
+            } else if (method.getDeclaringClass().isAnnotationPresent(RolesAllowed.class)) {
+                RolesAllowed rolesAnnotation = method.getDeclaringClass().getAnnotation(RolesAllowed.class);
+                Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
+
+                for (String s : rolesSet) {
+                    System.out.println(s);
+                }
 
                 //Is user valid?
                 if (!isUserAllowed(username, password, rolesSet)) {
@@ -105,7 +122,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             return false;
         }
 
-        if (usuario.getSenha() != password) {
+        if (!usuario.getSenha().equals(password)) {
             return false;
         }
         //Step 1. Fetch password from database and match with password in argument

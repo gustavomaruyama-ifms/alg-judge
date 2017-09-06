@@ -46,6 +46,7 @@ public class ProblemaResource {
 
     @GET
     @Path("/list/{qtde}")
+
     public List<Problema> listarProblemas(@PathParam("qtde") Integer qtde) {
         return db.listarProblemas(qtde);
     }
