@@ -40,6 +40,7 @@ public class ProblemaResource {
             db.persistirProblema(problema);
             return Response.Ok("Problema incluio com sucesso");
         } catch (Exception ex) {
+            System.out.println("Falhou");
             return Response.Error(ex.getMessage());
         }
     }

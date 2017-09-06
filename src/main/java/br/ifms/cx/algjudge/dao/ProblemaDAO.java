@@ -22,10 +22,6 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
      * @return 
      */
     public Problema buscarProblemaPorId(Long id) {
-        //Query query = super.createQuery("FROM Coordenada c ORDER BY c.id DESC WHERE c.id = :id");
-        //query.setParameter("id", id);
-        //query.setMaxResults(1);
-        //return (Problema) query.uniqueResult();
         return get(id);
     }
 
@@ -44,8 +40,7 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
      */
     @SuppressWarnings("unchecked")
     public List<Problema> listarProblemas(Integer qtde) {
-        Query query = super.createQuery("FROM Problema ORDER BY id DESC");
-        query.setMaxResults(qtde);
-        return query.list();
+     Query query = super.createQuery("from Problema as p where p.delete = false");
+     return query.list();
     }
 }

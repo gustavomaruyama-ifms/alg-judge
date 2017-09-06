@@ -5,6 +5,7 @@
  */
 package br.ifms.cx.algjudge.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +19,19 @@ import javax.persistence.SequenceGenerator;
 @Entity
 public class CasoDeTeste {
     @Id
-    @SequenceGenerator(sequenceName = "seq_submissao", name = "gen_seq_submissao", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(generator = "gen_seq_submissao", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "seq_caso_de_teste", name = "gen_seq_caso_de_teste",
+            allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "gen_seq_caso_de_teste", strategy = GenerationType.SEQUENCE)
     private Long id;
     private Boolean exemplo;
     private String entrada;
+    @Column(nullable = false)
+    private Boolean delete;
     private String saida;
+
+    public CasoDeTeste() {
+        this.delete = false;
+    }
 
     public Long getId() {
         return id;
@@ -56,6 +64,12 @@ public class CasoDeTeste {
     public void setSaida(String saida) {
         this.saida = saida;
     }
-    
-    
+
+    public Boolean getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Boolean delete) {
+        this.delete = delete;
+    }  
 }

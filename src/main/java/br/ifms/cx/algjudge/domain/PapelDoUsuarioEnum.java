@@ -9,7 +9,7 @@ package br.ifms.cx.algjudge.domain;
  *
  * @author Rodrigo
  */
-public enum PapelDoUsuario {
+public enum PapelDoUsuarioEnum {
     
     ALUNO ("ALUNO"),
     PROFESSOR("PROFESSOR"),
@@ -17,7 +17,7 @@ public enum PapelDoUsuario {
     
     private String papel;
     
-    private PapelDoUsuario (String papel) {
+    private PapelDoUsuarioEnum (String papel) {
         this.papel = papel;
     }
 }

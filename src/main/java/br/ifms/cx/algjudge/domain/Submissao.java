@@ -6,6 +6,7 @@
 package br.ifms.cx.algjudge.domain;
 
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,13 +28,21 @@ public class Submissao {
     @SequenceGenerator(sequenceName = "seq_submissao", name = "gen_seq_submissao", allocationSize = 1, initialValue = 1)
     @GeneratedValue(generator = "gen_seq_submissao", strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(length = 50000)
     private String codigoFonte;
     @Temporal(TemporalType.DATE)
     private Date dataEnvio;
+    @Column(nullable = false)
+    private Boolean delete;
     private Long tempoExecucao;
     @Enumerated(EnumType.STRING)
     private SituacaoSubmissaoEnum situacao;
 
+    public Submissao() {
+        this.delete = false;
+    }
+    
+    
     public SituacaoSubmissaoEnum getSituacao() {
         return situacao;
     }
@@ -72,5 +81,13 @@ public class Submissao {
 
     public void setTempoExecucao(Long tempoExecucao) {
         this.tempoExecucao = tempoExecucao;
+    }
+
+    public Boolean getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Boolean delete) {
+        this.delete = delete;
     }
 }
