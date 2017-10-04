@@ -10,9 +10,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,11 +34,12 @@ public class Submissao {
     private String codigoFonte;
     @Temporal(TemporalType.DATE)
     private Date dataEnvio;
-    @Column(nullable = false)
-    private Boolean delete;
+    private Boolean delete = false;
     private Long tempoExecucao;
     @Enumerated(EnumType.STRING)
     private SituacaoSubmissaoEnum situacao;
+    @ManyToOne( fetch = FetchType.LAZY)
+    private Problema problema;
 
     public Submissao() {
         this.delete = false;
@@ -90,4 +93,14 @@ public class Submissao {
     public void setDelete(Boolean delete) {
         this.delete = delete;
     }
+
+    public Problema getProblema() {
+        return problema;
+    }
+
+    public void setProblema(Problema problema) {
+        this.problema = problema;
+    }
+    
+    
 }

@@ -7,9 +7,11 @@ package br.ifms.cx.algjudge.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
 /**
@@ -28,6 +30,8 @@ public class CasoDeTeste {
     @Column(nullable = false)
     private Boolean delete;
     private String saida;
+     @ManyToOne( fetch = FetchType.LAZY)
+    private Problema problema;
 
     public CasoDeTeste() {
         this.delete = false;
@@ -72,4 +76,12 @@ public class CasoDeTeste {
     public void setDelete(Boolean delete) {
         this.delete = delete;
     }  
+
+    public Problema getProblema() {
+        return problema;
+    }
+
+    public void setProblema(Problema problema) {
+        this.problema = problema;
+    }
 }
