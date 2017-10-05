@@ -1,20 +1,23 @@
 /*
- * Codigo retirado de: http://howtodoinjava.com/jersey/jersey-rest-security/ 
+ * Codigo Baseado de: http://howtodoinjava.com/jersey/jersey-rest-security/ 
  */
 package br.ifms.cx.algjudge.rest;
 
 import br.ifms.cx.algjudge.dao.UsuarioDAO;
 import br.ifms.cx.algjudge.domain.Usuario;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.security.DenyAll;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
@@ -40,84 +43,141 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     private UsuarioDAO usuarioDAO;
 
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
-    private static final String AUTHENTICATION_SCHEME = "Basic";
+    private static final String AUTHENTICATION_BASIC_SCHEME = "Basic";
+    private static final String AUTHENTICATION_JWT_SCHEME = "Bearer";
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED)
-                .entity("Você não tem permissão para acessar este serviço.").build();
-        Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN)
-                .entity("Acesso bloqueado para todos os usuÃ¡rios").build();
-        Method method = resourceInfo.getResourceMethod();
-        //Access allowed for all
-        if (!method.isAnnotationPresent(PermitAll.class)) {
-            //Access denied for all
-            if (method.isAnnotationPresent(DenyAll.class)) {
-                requestContext.abortWith(ACCESS_FORBIDDEN);
-                return;
-            }
+        Method metodo = resourceInfo.getResourceMethod();
+        Class classe = metodo.getDeclaringClass();
 
-            //Get request headers
-            final MultivaluedMap<String, String> headers = requestContext.getHeaders();
+        // Negar acesso caso o metodo estiver anotado com @DenyAll (negar todos)
+        if (metodo.isAnnotationPresent(DenyAll.class)) {
+            negarAcesso(requestContext);
+            return;
+        }
 
-            //Fetch authorization header
-            final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+        // Negar acesso caso a classe estiver anotado com @DenyAll (negar todos)
+        if (classe.isAnnotationPresent(DenyAll.class)) {
+            negarAcesso(requestContext);
+            return;
+        }
 
-            //If no authorization information present; block access
-            if (authorization == null || authorization.isEmpty()) {
-                requestContext.abortWith(ACCESS_DENIED);
-                return;
-            }
+        //Get request headers
+        MultivaluedMap<String, String> headers = requestContext.getHeaders();
 
-            //Get encoded username and password
-            final String encodedUserPassword = authorization.get(0).replaceFirst(AUTHENTICATION_SCHEME + " ", "");
+        //Fetch authorization header
+        List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
 
-            //Decode username and password
-            String usernameAndPassword = new String(Base64.decode(encodedUserPassword.getBytes()));
+        //If no authorization information present; block access
+        if (authorization == null || authorization.isEmpty()) {
+            negarAcesso(requestContext);
+            return;
+        }
 
-            //Split username and password tokens
-            final StringTokenizer tokenizer = new StringTokenizer(usernameAndPassword, ":");
-            final String username = tokenizer.nextToken();
-            final String password = tokenizer.nextToken();
-
-            //Verifying Username and password
-            System.out.println(username);
-            System.out.println(password);
-
-            //Verify user access
-            if (method.isAnnotationPresent(RolesAllowed.class)) {
-                RolesAllowed rolesAnnotation = method.getAnnotation(RolesAllowed.class);
-                Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
-
-                for (String s : rolesSet) {
-                    System.out.println(s);
-                }
-
-                //Is user valid?
-                if (!isUserAllowed(username, password, rolesSet)) {
-                    requestContext.abortWith(ACCESS_DENIED);
-                    return;
-                }
-            } else if (method.getDeclaringClass().isAnnotationPresent(RolesAllowed.class)) {
-                RolesAllowed rolesAnnotation = method.getDeclaringClass().getAnnotation(RolesAllowed.class);
-                Set<String> rolesSet = new HashSet<String>(Arrays.asList(rolesAnnotation.value()));
-
-                for (String s : rolesSet) {
-                    System.out.println(s);
-                }
-
-                //Is user valid?
-                if (!isUserAllowed(username, password, rolesSet)) {
-                    requestContext.abortWith(ACCESS_DENIED);
-                    return;
-                }
-            }
+        if (authorization.get(0).contains(AUTHENTICATION_BASIC_SCHEME)) {
+            autenticacaoBasica(requestContext, classe, metodo);
+        } else if (authorization.get(0).contains(AUTHENTICATION_JWT_SCHEME)) {
+            autenticacaoJWT(requestContext, classe, metodo);
+        } else {
+            negarAcesso(requestContext);
+            return;
         }
     }
 
-    private boolean isUserAllowed(final String username, final String password, final Set<String> rolesSet) {
-        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(username);
+    private void negarAcesso(ContainerRequestContext requestContext) {
+        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                .entity("Você não tem permissão para acessar este serviço.").build());
+    }
 
+    private void autenticacaoBasica(ContainerRequestContext requestContext, Class classe, Method metodo) {
+        //Get request headers
+        MultivaluedMap<String, String> headers = requestContext.getHeaders();
+
+        //Fetch authorization header
+        final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+
+        //If no authorization information present; block access
+        if (authorization == null || authorization.isEmpty()) {
+            negarAcesso(requestContext);
+            return;
+        }
+
+        String encodedEmailSenha = authorization.get(0).replaceFirst(AUTHENTICATION_BASIC_SCHEME + " ", "");
+
+        //Decode username and password
+        String emailESenha = new String(Base64.decode(encodedEmailSenha.getBytes()));
+
+        //Split username and password tokens
+        final StringTokenizer tokenizer = new StringTokenizer(emailESenha, ":");
+        final String email = tokenizer.nextToken();
+        final String senha = tokenizer.nextToken();
+
+        // Busca usuario pelo email no banco de dados
+        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
+
+        // Se o usuario veio null
+        if (usuario == null) {
+            negarAcesso(requestContext);
+            return;
+        }
+
+        if (!senha.equals(usuario.getSenha())) {
+            negarAcesso(requestContext);
+            return;
+        }
+
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
+            String token = JWT.create()
+                    .withIssuer(usuario.getEmail()+" "+usuario.getPapel())
+                    .sign(algorithm);
+
+            JWTVerifier verifier = JWT.require(algorithm)
+                    
+                    .build();
+            DecodedJWT jwt = verifier.verify(token);
+            requestContext.abortWith(Response.status(Response.Status.OK)
+                .entity(token).build());
+           
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void autenticacaoJWT(ContainerRequestContext requestContext, Class classe, Method metodo) {
+        //Get request headers
+        MultivaluedMap<String, String> headers = requestContext.getHeaders();
+
+        //Fetch authorization header
+        final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
+
+        //If no authorization information present; block access
+        if (authorization == null || authorization.isEmpty()) {
+            negarAcesso(requestContext);
+            return;
+        }
+
+        String token = authorization.get(0).replaceFirst(AUTHENTICATION_JWT_SCHEME + " ", "");
+        try {
+            Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            DecodedJWT jwt = verifier.verify(token);
+           
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private boolean isUserAllowed(final String email, final String password, final Set<String> rolesSet) {
+        // Busca usuario pelo email no banco de dados
+        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
+
+        // Se o usuario veio null
         if (usuario == null) {
             return false;
         }
@@ -125,16 +185,10 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         if (!usuario.getSenha().equals(password)) {
             return false;
         }
-        //Step 1. Fetch password from database and match with password in argument
-        //If both match then get the defined role for user from database and continue; else return isAllowed [false]
-        //Access the database and do this part yourself
-        //String userRole = userMgr.getUserRole(username);
 
-        //Step 2. Verify user role
         if (!rolesSet.contains(usuario.getPapel())) {
             return false;
         }
-
         return true;
     }
 }
