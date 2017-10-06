@@ -6,9 +6,12 @@
 package br.ifms.cx.algjudge.rest;
 
 import br.com.vinyanalista.portugol.interpretador.Interpretador;
+import br.com.vinyanalista.portugol.interpretador.execucao.ErroEmTempoDeExecucao;
+import br.com.vinyanalista.portugol.interpretador.execucao.EscutaDeExecutor;
 import br.ifms.cx.algjudge.dao.ProblemaDAO;
 import br.ifms.cx.algjudge.dao.SubmissaoDAO;
 import br.ifms.cx.algjudge.domain.CasoDeTeste;
+import br.ifms.cx.algjudge.domain.EscutaDeExecutorSubmissao;
 import br.ifms.cx.algjudge.domain.Response;
 import br.ifms.cx.algjudge.domain.SituacaoSubmissaoEnum;
 import br.ifms.cx.algjudge.domain.Submissao;
@@ -24,6 +27,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -45,33 +49,28 @@ public class SubmissaoResource {
     }
 
     @POST
+    @Transactional
     public Response submeter(Submissao submissao) {
-       
+
         try {
-            
             submissaoDAO.salvarSubmissao(submissao);
             List<CasoDeTeste> casosDeTeste = problemaDAO.buscarCasoDeTestePorIdProblema(submissao.getProblema().getId());
             Interpretador interpretador;
             TerminalCasoDeTeste terminalCasoDeTeste;
             String saida;
-            
+
             for (CasoDeTeste caso : casosDeTeste) {
                 terminalCasoDeTeste = new TerminalCasoDeTeste(caso);
                 interpretador = new Interpretador(terminalCasoDeTeste);
-
+                interpretador.adicionarEscutaDeExecutor(new EscutaDeExecutorSubmissao(caso, submissaoDAO, terminalCasoDeTeste, submissao));
                 interpretador.analisar(submissao.getCodigoFonte());
                 interpretador.executar();
-                saida = terminalCasoDeTeste.getSaida();
-                if (!saida.equals(caso.getSaida())) {
-                    submissao.setSituacao(SituacaoSubmissaoEnum.RESPOSTA_ERRADA);
-                    submissaoDAO.saveOrUpdate(submissao);
-                }
             }
-
+            
             return Response.Ok("Submissao incluida com sucesso");
         } catch (IOException ex) {
             return Response.Error(ex.getMessage());
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             submissao.setSituacao(SituacaoSubmissaoEnum.ERRO_DE_SINTAX);
             submissaoDAO.update(submissao);
             return Response.Error(ex.getMessage());

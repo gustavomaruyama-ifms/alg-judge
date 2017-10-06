@@ -7,57 +7,57 @@ package br.ifms.cx.algjudge.domain;
 
 import br.com.vinyanalista.portugol.interpretador.Terminal;
 import java.awt.Color;
-import java.util.List;
 
 /**
  *
  * @author Rodrigo
  */
 public class TerminalCasoDeTeste extends Terminal {
-    
-    CasoDeTeste casosDeTeste;
-    String entradas[];
-    StringBuilder saida;
-    int i;
+
+    private CasoDeTeste casosDeTeste;
+    private String entradas[];
+    private StringBuilder saida;
+    private int i;
+
     public TerminalCasoDeTeste(CasoDeTeste casosDeTeste) {
         this.casosDeTeste = casosDeTeste;
         this.entradas = casosDeTeste.getEntrada().split("\n");
         this.saida = new StringBuilder();
         this.i = 0;
     }
-    
-    public String getSaida () {
+
+    public String getSaida() {
         return saida.toString();
     }
-    
+
     @Override
     public void erro(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Erro " + string);
     }
 
     @Override
     protected void escrever(String string) {
-        saida.append(string+"\n");
+        saida.append(string);
     }
 
     @Override
     public void informacao(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Informação");
     }
 
     @Override
     protected String ler() {
-        return  entradas[i++];
+        return entradas[i++];
     }
 
     @Override
     public void limpar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Limpar");
+
     }
 
     @Override
     protected void mudarCor(Color color) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Mudar Cor");
     }
-    
 }
