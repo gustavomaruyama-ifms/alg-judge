@@ -17,7 +17,7 @@ public class MyApplication extends Application {
         return properties;
     }
 
-   @Override
+    @Override
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> resources = new HashSet<Class<?>>();
         resources.add(CorsFilter.class);

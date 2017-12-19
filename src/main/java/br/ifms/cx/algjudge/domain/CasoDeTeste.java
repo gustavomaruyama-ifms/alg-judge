@@ -5,6 +5,7 @@
  */
 package br.ifms.cx.algjudge.domain;
 
+import com.google.gson.annotations.Expose;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,13 +29,13 @@ public class CasoDeTeste {
     private Boolean exemplo;
     private String entrada;
     @Column(nullable = false)
-    private Boolean delete;
+    private Boolean ativo;
     private String saida;
-     @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.LAZY)
     private Problema problema;
 
     public CasoDeTeste() {
-        this.delete = false;
+        this.ativo = true;
     }
 
     public Long getId() {
@@ -69,12 +70,12 @@ public class CasoDeTeste {
         this.saida = saida;
     }
 
-    public Boolean getDelete() {
-        return delete;
+    public Boolean getAtivo() {
+        return ativo;
     }
 
-    public void setDelete(Boolean delete) {
-        this.delete = delete;
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }  
 
     public Problema getProblema() {

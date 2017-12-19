@@ -53,7 +53,7 @@ public class CasoDeTesteDAO extends HibernateDAO<CasoDeTeste>{
      */
     public void deleteCasoDeTeste (Integer id) {
         caso = get(id);
-        caso.setDelete(true);
+        caso.setAtivo(true);
         super.update(caso);
     }
     
@@ -69,8 +69,9 @@ public class CasoDeTesteDAO extends HibernateDAO<CasoDeTeste>{
      * listar casos de teste
      * @return 
      */
-    public List<CasoDeTeste> listarCasoDeTeste () {
-       Query query  = super.createQuery("FROM CasoDeTeste c WHERE  c.delete = false");
+    public List<CasoDeTeste> listarCasoDeTeste (Long id) {
+       Query query  = super.createQuery("select c from CasoDeTeste c fetch join c.problema p"
+               + "where c.ativo is true and p.id = :id").setLong("id", id);
        return query.list();
     }
 }
