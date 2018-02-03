@@ -10,55 +10,55 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+
+
 /**
  *
- * @author Gustavo
+ * @author Rodrigo
  */
-@Entity
+@Entity 
 public class Usuario {
-
-    public static final String PAPEL_ADMINISTRADOR = "Administrador";
-    public static final String PAPEL_ALUNO = "Aluno";
-    public static final String PAPEL_PROFESSOR = "Professor";
-
+    
+    public static final String PAPEL_ALUNO =  "ALUNO";
+    public static final String PAPEL_PROFESSOR = "PROFESSOR";
+    public static final String PAPEL_ADMINISTRADOR = "ADMINISTRADOR";
+    
     @Id
-    @SequenceGenerator(sequenceName = "seq_usuario", name = "gen_seq_usuario", allocationSize = 1, initialValue = 1)
-    @GeneratedValue(generator = "gen_seq_usuario", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(sequenceName = "seq_user", name = "gen_seq_user", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(generator = "gen_seq_user", strategy = GenerationType.SEQUENCE)
     private Long id;
     private String nome;
-    @Column(unique = true)
-    private String email;
     private String senha;
-    @Column(nullable = false)
+    private String email;
+    @Column(nullable = true)
+    private Boolean ativo;
     private String papel;
 
     public Usuario() {
-
+        this.ativo = false;
     }
-
-    /**
-     * Metodo que retorna uma {@link List} com todos os papeis de um
-     * {@link Usuario} em formato {@link String}
-     *
-     * @return {@link List<Usuario>}
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     */
+    
+    public void setAtivo(Boolean situacao) {
+        this.ativo = situacao;
+    }
+    
     public static List<String> getPapeis() throws IllegalArgumentException, IllegalAccessException {
-        List<String> papeis = new ArrayList<String>();
+        List<String> situacoes = new ArrayList<String>();
         for (Field f : Usuario.class.getFields()) {
             if (f.getName().contains("PAPEL")) {
-                papeis.add(f.get(null).toString());
+                situacoes.add(f.get(null).toString());
             }
         }
-        return papeis;
+        return situacoes;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -81,7 +81,15 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
-    }
+    } 
+    
+    public void setPapel(String papel) {
+       this.papel = papel;
+    };
+    
+    public String getPapel() {
+       return this.papel;
+    };
 
     public String getSenha() {
         return senha;
@@ -89,13 +97,5 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getPapel() {
-        return papel;
-    }
-
-    public void setPapel(String papel) {
-        this.papel = papel;
     }
 }

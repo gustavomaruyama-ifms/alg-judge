@@ -1,0 +1,702 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007faef1024cc1, pid=11226, tid=0x00007faf09b10700
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_151-b12) (build 1.8.0_151-b12)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.151-b12 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# j  java.util.WeakHashMap.get(Ljava/lang/Object;)Ljava/lang/Object;+12
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007faf0000a000):  JavaThread "main" [_thread_in_Java, id=11229, stack(0x00007faf09a10000,0x00007faf09b11000)]
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000048600304
+
+Registers:
+RAX=0x00000000486002f8, RBX=0x00000000000000be, RCX=0x000000000000007c, RDX=0x00000000000016b6
+RSP=0x00007faf09b0ce20, RBP=0x00007faf09b0ce68, RSI=0x00000000d96002c8, RDI=0x0000000000000000
+R8 =0x0000000000000775, R9 =0x0000000000000cb1, R10=0x00007faf08ee2c20, R11=0x00007faef116e860
+R12=0x0000000000000000, R13=0x00007faf0526cf7c, R14=0x00007faf09b0cea8, R15=0x00007faf0000a000
+RIP=0x00007faef1024cc1, EFLAGS=0x0000000000010202, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007faf09b0ce20)
+0x00007faf09b0ce20:   000000004f0c3722 00007faf09b0ce28
+0x00007faf09b0ce30:   00007faf0526cf74 00007faf09b0cea8
+0x00007faf09b0ce40:   00007faf052dda28 0000000000000000
+0x00007faf09b0ce50:   00007faf0526cfc8 0000000000000000
+0x00007faf09b0ce60:   00007faf09b0cea0 00007faf09b0cef0
+0x00007faf09b0ce70:   00007faef1008114 0000000000000000
+0x00007faf09b0ce80:   0000000000000000 00000000486002f8
+0x00007faf09b0ce90:   000000004f0c3722 00000000d940e010
+0x00007faf09b0cea0:   00000000d940e010 00000000d96002c8
+0x00007faf09b0ceb0:   00007faf09b0ceb0 00007faeec1db5d4
+0x00007faf09b0cec0:   00007faf09b0cf08 00007faeec1db720
+0x00007faf09b0ced0:   0000000000000000 00007faeec1db620
+0x00007faf09b0cee0:   00007faf09b0cea0 00007faf09b0cf08
+0x00007faf09b0cef0:   00007faf09b0cf50 00007faef1008040
+0x00007faf09b0cf00:   0000000000000000 00000000d940e010
+0x00007faf09b0cf10:   00007faf09b0cf10 00007faeec1db448
+0x00007faf09b0cf20:   00007faf09b0cfa8 00007faeec1db720
+0x00007faf09b0cf30:   0000000000000000 00007faeec1db548
+0x00007faf09b0cf40:   00007faf09b0cf08 00007faf09b0cf98
+0x00007faf09b0cf50:   00007faf09b0cff0 00007faef1008040
+0x00007faf09b0cf60:   0000000000000000 0000000000000000
+0x00007faf09b0cf70:   0000000000000000 0000000000000000
+0x00007faf09b0cf80:   00000000d706d210 00000000d706d248
+0x00007faf09b0cf90:   00000000d6f90fe0 0000000000000000
+0x00007faf09b0cfa0:   00000000d6f90fe0 00000000d706d210
+0x00007faf09b0cfb0:   00007faf09b0cfb0 00007faf058ec06f
+0x00007faf09b0cfc0:   00007faf09b0d010 00007faeec1ce198
+0x00007faf09b0cfd0:   0000000000000000 00007faf058ec0d8
+0x00007faf09b0cfe0:   00007faf09b0cf98 00007faf09b0d008
+0x00007faf09b0cff0:   00007faf09b0d058 00007faef1008114
+0x00007faf09b0d000:   0000000000000000 00000000d706d210
+0x00007faf09b0d010:   00000000d706aa50 00007faf09b0d018 
+
+Instructions: (pc=0x00007faef1024cc1)
+0x00007faef1024ca1:   00 00 00 00 00 00 00 47 f5 a1 08 af 7f 00 00 be
+0x00007faef1024cb1:   00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 58
+0x00007faef1024cc1:   8b 40 0c 41 0f b6 5d 01 49 ff c5 49 ba 20 0c ee
+0x00007faef1024cd1:   08 af 7f 00 00 41 ff 24 da 66 0f 1f 44 00 00 40 
+
+Register to memory mapping:
+
+RAX=0x00000000486002f8 is an unknown value
+RBX=0x00000000000000be is an unknown value
+RCX=0x000000000000007c is an unknown value
+RDX=0x00000000000016b6 is an unknown value
+RSP=0x00007faf09b0ce20 is pointing into the stack for thread: 0x00007faf0000a000
+RBP=0x00007faf09b0ce68 is pointing into the stack for thread: 0x00007faf0000a000
+RSI=0x00000000d96002c8 is an oop
+java.util.WeakHashMap 
+ - klass: 'java/util/WeakHashMap'
+RDI=0x0000000000000000 is an unknown value
+R8 =0x0000000000000775 is an unknown value
+R9 =0x0000000000000cb1 is an unknown value
+R10=0x00007faf08ee2c20: <offset 0xfd0c20> in /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so at 0x00007faf07f12000
+R11=0x00007faef116e860 is at entry_point+32 in (nmethod*)0x00007faef116e6d0
+R12=0x0000000000000000 is an unknown value
+R13=0x00007faf0526cf7c is pointing into metadata
+R14=0x00007faf09b0cea8 is pointing into the stack for thread: 0x00007faf0000a000
+R15=0x00007faf0000a000 is a thread
+
+
+Stack: [0x00007faf09a10000,0x00007faf09b11000],  sp=0x00007faf09b0ce20,  free space=1011k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+j  java.util.WeakHashMap.get(Ljava/lang/Object;)Ljava/lang/Object;+12
+j  org.codehaus.plexus.interpolation.reflection.ReflectionValueExtractor.getClassMap(Ljava/lang/Class;)Lorg/codehaus/plexus/interpolation/reflection/ClassMap;+4
+j  org.codehaus.plexus.interpolation.reflection.ReflectionValueExtractor.evaluate(Ljava/lang/String;Ljava/lang/Object;Z)Ljava/lang/Object;+56
+j  org.codehaus.plexus.interpolation.ObjectBasedValueSource.getValue(Ljava/lang/String;)Ljava/lang/Object;+23
+j  org.codehaus.plexus.interpolation.PrefixedValueSourceWrapper.getValue(Ljava/lang/String;)Ljava/lang/Object;+33
+j  org.codehaus.plexus.interpolation.AbstractDelegatingValueSource.getValue(Ljava/lang/String;)Ljava/lang/Object;+5
+j  org.codehaus.plexus.interpolation.StringSearchInterpolator.interpolate(Ljava/lang/String;Lorg/codehaus/plexus/interpolation/RecursionInterceptor;Ljava/util/Set;)Ljava/lang/String;+358
+j  org.codehaus.plexus.interpolation.StringSearchInterpolator.interpolate(Ljava/lang/String;Lorg/codehaus/plexus/interpolation/RecursionInterceptor;)Ljava/lang/String;+10
+J 1357 C1 org.apache.maven.model.interpolation.AbstractStringBasedModelInterpolator.interpolateInternal(Ljava/lang/String;Ljava/util/List;Ljava/util/List;Lorg/apache/maven/model/building/ModelProblemCollector;)Ljava/lang/String; (357 bytes) @ 0x00007faef146e304 [0x00007faef146d640+0xcc4]
+J 1287 C1 org.apache.maven.model.interpolation.StringSearchModelInterpolator$InterpolateObjectAction.interpolateStringField(Ljava/lang/Object;Ljava/lang/reflect/Field;)V (63 bytes) @ 0x00007faef142f02c [0x00007faef142ebc0+0x46c]
+J 1286 C1 org.apache.maven.model.interpolation.StringSearchModelInterpolator$InterpolateObjectAction.interpolateField(Ljava/lang/Class;Ljava/lang/Object;Ljava/lang/reflect/Field;Ljava/lang/Class;)V (244 bytes) @ 0x00007faef1437424 [0x00007faef1437060+0x3c4]
+J 1358 C1 org.apache.maven.model.interpolation.StringSearchModelInterpolator$InterpolateObjectAction.traverseObjectWithParents(Ljava/lang/Class;Ljava/lang/Object;)V (118 bytes) @ 0x00007faef14723dc [0x00007faef1471780+0xc5c]
+j  org.apache.maven.model.interpolation.StringSearchModelInterpolator$InterpolateObjectAction.run()Ljava/lang/Object;+24
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x693e76]  JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*)+0x1056
+V  [libjvm.so+0x72d14c]  JVM_DoPrivileged+0x27c
+J 832  java.security.AccessController.doPrivileged(Ljava/security/PrivilegedAction;)Ljava/lang/Object; (0 bytes) @ 0x00007faef13224ff [0x00007faef1322440+0xbf]
+j  org.apache.maven.model.interpolation.StringSearchModelInterpolator.interpolateObject(Ljava/lang/Object;Lorg/apache/maven/model/Model;Ljava/io/File;Lorg/apache/maven/model/building/ModelBuildingRequest;Lorg/apache/maven/model/building/ModelProblemCollector;)V+41
+j  org.apache.maven.model.interpolation.StringSearchModelInterpolator.interpolateModel(Lorg/apache/maven/model/Model;Ljava/io/File;Lorg/apache/maven/model/building/ModelBuildingRequest;Lorg/apache/maven/model/building/ModelProblemCollector;)Lorg/apache/maven/model/Model;+7
+j  org.apache.maven.model.building.DefaultModelBuilder.interpolateModel(Lorg/apache/maven/model/Model;Lorg/apache/maven/model/building/ModelBuildingRequest;Lorg/apache/maven/model/building/ModelProblemCollector;)Lorg/apache/maven/model/Model;+11
+j  org.apache.maven.model.building.DefaultModelBuilder.build(Lorg/apache/maven/model/building/ModelBuildingRequest;Ljava/util/Collection;)Lorg/apache/maven/model/building/ModelBuildingResult;+644
+j  org.apache.maven.model.building.DefaultModelBuilder.build(Lorg/apache/maven/model/building/ModelBuildingRequest;)Lorg/apache/maven/model/building/ModelBuildingResult;+9
+j  org.apache.maven.repository.internal.DefaultArtifactDescriptorReader.loadPom(Lorg/sonatype/aether/RepositorySystemSession;Lorg/sonatype/aether/resolution/ArtifactDescriptorRequest;Lorg/sonatype/aether/resolution/ArtifactDescriptorResult;)Lorg/apache/maven/model/Model;+523
+j  org.apache.maven.repository.internal.DefaultArtifactDescriptorReader.readArtifactDescriptor(Lorg/sonatype/aether/RepositorySystemSession;Lorg/sonatype/aether/resolution/ArtifactDescriptorRequest;)Lorg/sonatype/aether/resolution/ArtifactDescriptorResult;+13
+j  org.sonatype.aether.impl.internal.DefaultRepositorySystem.readArtifactDescriptor(Lorg/sonatype/aether/RepositorySystemSession;Lorg/sonatype/aether/resolution/ArtifactDescriptorRequest;)Lorg/sonatype/aether/resolution/ArtifactDescriptorResult;+11
+j  org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver.resolve(Lorg/apache/maven/model/Plugin;Ljava/util/List;Lorg/sonatype/aether/RepositorySystemSession;)Lorg/sonatype/aether/artifact/Artifact;+56
+j  org.apache.maven.plugin.internal.DefaultMavenPluginManager.getPluginDescriptor(Lorg/apache/maven/model/Plugin;Ljava/util/List;Lorg/sonatype/aether/RepositorySystemSession;)Lorg/apache/maven/plugin/descriptor/PluginDescriptor;+39
+j  org.apache.maven.plugin.internal.DefaultMavenPluginManager.getMojoDescriptor(Lorg/apache/maven/model/Plugin;Ljava/lang/String;Ljava/util/List;Lorg/sonatype/aether/RepositorySystemSession;)Lorg/apache/maven/plugin/descriptor/MojoDescriptor;+5
+j  org.apache.maven.plugin.DefaultBuildPluginManager.getMojoDescriptor(Lorg/apache/maven/model/Plugin;Ljava/lang/String;Ljava/util/List;Lorg/sonatype/aether/RepositorySystemSession;)Lorg/apache/maven/plugin/descriptor/MojoDescriptor;+9
+j  org.apache.maven.lifecycle.internal.DefaultLifecycleExecutionPlanCalculator.setupMojoExecution(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/project/MavenProject;Lorg/apache/maven/plugin/MojoExecution;)V+31
+j  org.apache.maven.lifecycle.internal.DefaultLifecycleExecutionPlanCalculator.setupMojoExecutions(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/project/MavenProject;Ljava/util/List;)V+35
+j  org.apache.maven.lifecycle.internal.DefaultLifecycleExecutionPlanCalculator.calculateExecutionPlan(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/project/MavenProject;Ljava/util/List;Z)Lorg/apache/maven/lifecycle/MavenExecutionPlan;+28
+j  org.apache.maven.lifecycle.internal.DefaultLifecycleExecutionPlanCalculator.calculateExecutionPlan(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/project/MavenProject;Ljava/util/List;)Lorg/apache/maven/lifecycle/MavenExecutionPlan;+5
+j  org.apache.maven.lifecycle.internal.BuilderCommon.resolveBuildPlan(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/project/MavenProject;Lorg/apache/maven/lifecycle/internal/TaskSegment;Ljava/util/Set;)Lorg/apache/maven/lifecycle/MavenExecutionPlan;+10
+j  org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/lifecycle/internal/ReactorContext;Lorg/apache/maven/project/MavenProject;Lorg/apache/maven/lifecycle/internal/TaskSegment;)V+88
+j  org.apache.maven.lifecycle.internal.LifecycleModuleBuilder.buildProject(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/lifecycle/internal/ReactorContext;Lorg/apache/maven/project/MavenProject;Lorg/apache/maven/lifecycle/internal/TaskSegment;)V+7
+j  org.apache.maven.lifecycle.internal.LifecycleStarter.singleThreadedBuild(Lorg/apache/maven/execution/MavenSession;Lorg/apache/maven/lifecycle/internal/ReactorContext;Lorg/apache/maven/lifecycle/internal/ProjectBuildList;Ljava/util/List;Lorg/apache/maven/lifecycle/internal/ReactorBuildStatus;)V+77
+j  org.apache.maven.lifecycle.internal.LifecycleStarter.execute(Lorg/apache/maven/execution/MavenSession;)V+421
+j  org.apache.maven.DefaultMaven.doExecute(Lorg/apache/maven/execution/MavenExecutionRequest;)Lorg/apache/maven/execution/MavenExecutionResult;+585
+j  org.apache.maven.DefaultMaven.execute(Lorg/apache/maven/execution/MavenExecutionRequest;)Lorg/apache/maven/execution/MavenExecutionResult;+11
+j  org.apache.maven.cli.MavenCli.execute(Lorg/apache/maven/cli/MavenCli$CliRequest;)I+19
+j  org.apache.maven.cli.MavenCli.doMain(Lorg/apache/maven/cli/MavenCli$CliRequest;)I+53
+j  org.apache.maven.cli.MavenCli.main([Ljava/lang/String;Lorg/codehaus/plexus/classworlds/ClassWorld;)I+18
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x693e76]  JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*)+0x1056
+V  [libjvm.so+0x9a0837]  Reflection::invoke(instanceKlassHandle, methodHandle, Handle, bool, objArrayHandle, BasicType, objArrayHandle, bool, Thread*)+0x5d7
+V  [libjvm.so+0x9a3f47]  Reflection::invoke_method(oopDesc*, Handle, objArrayHandle, Thread*)+0x147
+V  [libjvm.so+0x72752b]  JVM_InvokeMethod+0x26b
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+100
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+56
+j  org.codehaus.plexus.classworlds.launcher.Launcher.launchEnhanced([Ljava/lang/String;)V+45
+j  org.codehaus.plexus.classworlds.launcher.Launcher.launch([Ljava/lang/String;)V+2
+j  org.codehaus.plexus.classworlds.launcher.Launcher.mainWithExitCode([Ljava/lang/String;)I+97
+j  org.codehaus.plexus.classworlds.launcher.Launcher.main([Ljava/lang/String;)V+1
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x693e76]  JavaCalls::call_helper(JavaValue*, methodHandle*, JavaCallArguments*, Thread*)+0x1056
+V  [libjvm.so+0x6d5292]  jni_invoke_static(JNIEnv_*, JavaValue*, _jobject*, JNICallType, _jmethodID*, JNI_ArgumentPusher*, Thread*)+0x362
+V  [libjvm.so+0x6f1afa]  jni_CallStaticVoidMethod+0x17a
+C  [libjli.so+0x80ff]  JavaMain+0x81f
+C  [libpthread.so.0+0x76ba]  start_thread+0xca
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007faf0065e000 JavaThread "process reaper" daemon [_thread_blocked, id=11244, stack(0x00007faeec0bd000,0x00007faeec0f6000)]
+  0x00007faf000cb800 JavaThread "Service Thread" daemon [_thread_blocked, id=11241, stack(0x00007faeec67e000,0x00007faeec77f000)]
+  0x00007faf000be000 JavaThread "C1 CompilerThread2" daemon [_thread_blocked, id=11240, stack(0x00007faeec77f000,0x00007faeec880000)]
+  0x00007faf000bc800 JavaThread "C2 CompilerThread1" daemon [_thread_in_native, id=11239, stack(0x00007faeec880000,0x00007faeec981000)]
+  0x00007faf000b9800 JavaThread "C2 CompilerThread0" daemon [_thread_in_native, id=11238, stack(0x00007faeec981000,0x00007faeeca82000)]
+  0x00007faf000b8000 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=11237, stack(0x00007faeeca82000,0x00007faeecb83000)]
+  0x00007faf00084000 JavaThread "Finalizer" daemon [_thread_blocked, id=11236, stack(0x00007faeece5c000,0x00007faeecf5d000)]
+  0x00007faf0007f800 JavaThread "Reference Handler" daemon [_thread_blocked, id=11235, stack(0x00007faeecf5d000,0x00007faeed05e000)]
+=>0x00007faf0000a000 JavaThread "main" [_thread_in_Java, id=11229, stack(0x00007faf09a10000,0x00007faf09b11000)]
+
+Other Threads:
+  0x00007faf00077800 VMThread [stack: 0x00007faeed05e000,0x00007faeed15f000] [id=11234]
+  0x00007faf000d6800 WatcherThread [stack: 0x00007faeec57d000,0x00007faeec67e000] [id=11242]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap:
+ PSYoungGen      total 36864K, used 6983K [0x00000000d6f00000, 0x00000000db700000, 0x0000000100000000)
+  eden space 31744K, 5% used [0x00000000d6f00000,0x00000000d70d9810,0x00000000d8e00000)
+  from space 5120K, 99% used [0x00000000d9300000,0x00000000d97f8400,0x00000000d9800000)
+  to   space 5120K, 0% used [0x00000000d8e00000,0x00000000d8e00000,0x00000000d9300000)
+ ParOldGen       total 84992K, used 1631K [0x0000000084c00000, 0x0000000089f00000, 0x00000000d6f00000)
+  object space 84992K, 1% used [0x0000000084c00000,0x0000000084d97d50,0x0000000089f00000)
+ Metaspace       used 13067K, capacity 13426K, committed 13568K, reserved 1060864K
+  class space    used 1611K, capacity 1725K, committed 1792K, reserved 1048576K
+
+Card table byte_map: [0x00007faf063cf000,0x00007faf067aa000] byte_map_base: 0x00007faf05fa9000
+
+Marking Bits: (ParMarkBitMap*) 0x00007faf08edbf80
+ Begin Bits: [0x00007faeed260000, 0x00007faeef130000)
+ End Bits:   [0x00007faeef130000, 0x00007faef1000000)
+
+Polling page: 0x00007faf09b2c000
+
+CodeCache: size=245760Kb used=4821Kb max_used=4844Kb free=240938Kb
+ bounds [0x00007faef1000000, 0x00007faef14c0000, 0x00007faf00000000]
+ total_blobs=1724 nmethods=1393 adapters=244
+ compilation: enabled
+
+Compilation events (10 events):
+Event: 1,546 Thread 0x00007faf000be000 nmethod 1377 0x00007faef147d450 code [0x00007faef147d600, 0x00007faef147dae8]
+Event: 1,546 Thread 0x00007faf000be000 1384       3       java.lang.Character::codePointAt (51 bytes)
+Event: 1,546 Thread 0x00007faf000be000 nmethod 1384 0x00007faef14a99d0 code [0x00007faef14a9b80, 0x00007faef14aa228]
+Event: 1,546 Thread 0x00007faf000be000 1383       3       java.util.HashMap::<init> (8 bytes)
+Event: 1,546 Thread 0x00007faf000be000 nmethod 1383 0x00007faef14aa3d0 code [0x00007faef14aa560, 0x00007faef14aa6e8]
+Event: 1,546 Thread 0x00007faf000be000 1388       3       org.codehaus.plexus.util.xml.Xpp3Dom::getAttributeNames (57 bytes)
+Event: 1,547 Thread 0x00007faf000be000 nmethod 1388 0x00007faef14aa790 code [0x00007faef14aa940, 0x00007faef14aafb8]
+Event: 1,547 Thread 0x00007faf000be000 1393       3       org.apache.maven.model.ConfigurationContainer::setLocation (35 bytes)
+Event: 1,547 Thread 0x00007faf000be000 nmethod 1393 0x00007faef14ab150 code [0x00007faef14ab2e0, 0x00007faef14ab788]
+Event: 1,547 Thread 0x00007faf000be000 1398       3       org.codehaus.plexus.util.xml.Xpp3Dom::<init> (123 bytes)
+
+GC Heap History (4 events):
+Event: 0,816 GC heap before
+{Heap before GC invocations=1 (full 0):
+ PSYoungGen      total 36864K, used 31744K [0x00000000d6f00000, 0x00000000d9800000, 0x0000000100000000)
+  eden space 31744K, 100% used [0x00000000d6f00000,0x00000000d8e00000,0x00000000d8e00000)
+  from space 5120K, 0% used [0x00000000d9300000,0x00000000d9300000,0x00000000d9800000)
+  to   space 5120K, 0% used [0x00000000d8e00000,0x00000000d8e00000,0x00000000d9300000)
+ ParOldGen       total 84992K, used 0K [0x0000000084c00000, 0x0000000089f00000, 0x00000000d6f00000)
+  object space 84992K, 0% used [0x0000000084c00000,0x0000000084c00000,0x0000000089f00000)
+ Metaspace       used 7778K, capacity 7982K, committed 8192K, reserved 1056768K
+  class space    used 978K, capacity 1021K, committed 1024K, reserved 1048576K
+Event: 0,821 GC heap after
+Heap after GC invocations=1 (full 0):
+ PSYoungGen      total 36864K, used 4594K [0x00000000d6f00000, 0x00000000d9800000, 0x0000000100000000)
+  eden space 31744K, 0% used [0x00000000d6f00000,0x00000000d6f00000,0x00000000d8e00000)
+  from space 5120K, 89% used [0x00000000d8e00000,0x00000000d927cbb8,0x00000000d9300000)
+  to   space 5120K, 0% used [0x00000000d9300000,0x00000000d9300000,0x00000000d9800000)
+ ParOldGen       total 84992K, used 8K [0x0000000084c00000, 0x0000000089f00000, 0x00000000d6f00000)
+  object space 84992K, 0% used [0x0000000084c00000,0x0000000084c02000,0x0000000089f00000)
+ Metaspace       used 7778K, capacity 7982K, committed 8192K, reserved 1056768K
+  class space    used 978K, capacity 1021K, committed 1024K, reserved 1048576K
+}
+Event: 1,482 GC heap before
+{Heap before GC invocations=2 (full 0):
+ PSYoungGen      total 36864K, used 36338K [0x00000000d6f00000, 0x00000000d9800000, 0x0000000100000000)
+  eden space 31744K, 100% used [0x00000000d6f00000,0x00000000d8e00000,0x00000000d8e00000)
+  from space 5120K, 89% used [0x00000000d8e00000,0x00000000d927cbb8,0x00000000d9300000)
+  to   space 5120K, 0% used [0x00000000d9300000,0x00000000d9300000,0x00000000d9800000)
+ ParOldGen       total 84992K, used 8K [0x0000000084c00000, 0x0000000089f00000, 0x00000000d6f00000)
+  object space 84992K, 0% used [0x0000000084c00000,0x0000000084c02000,0x0000000089f00000)
+ Metaspace       used 13016K, capacity 13362K, committed 13568K, reserved 1060864K
+  class space    used 1605K, capacity 1725K, committed 1792K, reserved 1048576K
+Event: 1,494 GC heap after
+Heap after GC invocations=2 (full 0):
+ PSYoungGen      total 36864K, used 5089K [0x00000000d6f00000, 0x00000000db700000, 0x0000000100000000)
+  eden space 31744K, 0% used [0x00000000d6f00000,0x00000000d6f00000,0x00000000d8e00000)
+  from space 5120K, 99% used [0x00000000d9300000,0x00000000d97f8400,0x00000000d9800000)
+  to   space 5120K, 0% used [0x00000000d8e00000,0x00000000d8e00000,0x00000000d9300000)
+ ParOldGen       total 84992K, used 1631K [0x0000000084c00000, 0x0000000089f00000, 0x00000000d6f00000)
+  object space 84992K, 1% used [0x0000000084c00000,0x0000000084d97d50,0x0000000089f00000)
+ Metaspace       used 13016K, capacity 13362K, committed 13568K, reserved 1060864K
+  class space    used 1605K, capacity 1725K, committed 1792K, reserved 1048576K
+}
+
+Deoptimization events (10 events):
+Event: 0,917 Thread 0x00007faf0000a000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007faef1302e18 method=java.util.HashMap.putVal(ILjava/lang/Object;Ljava/lang/Object;ZZ)Ljava/lang/Object; @ 203
+Event: 0,917 Thread 0x00007faf0000a000 Uncommon trap: reason=class_check action=maybe_recompile pc=0x00007faef1302e18 method=java.util.HashMap.putVal(ILjava/lang/Object;Ljava/lang/Object;ZZ)Ljava/lang/Object; @ 203
+Event: 1,206 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef127b1f4 method=org.codehaus.plexus.util.xml.pull.MXParser.nextImpl()I @ 269
+Event: 1,276 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef119e870 method=java.lang.String.replace(CC)Ljava/lang/String; @ 26
+Event: 1,452 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef12096e0 method=sun.nio.cs.UTF_8$Decoder.decode([BII[C)I @ 30
+Event: 1,453 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef127d198 method=sun.nio.cs.UTF_8$Decoder.decodeArrayLoop(Ljava/nio/ByteBuffer;Ljava/nio/CharBuffer;)Ljava/nio/charset/CoderResult; @ 84
+Event: 1,500 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef147a674 method=org.codehaus.plexus.util.xml.pull.MXParser.nextImpl()I @ 1149
+Event: 1,517 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef139fda8 method=java.util.HashMap.hash(Ljava/lang/Object;)I @ 1
+Event: 1,517 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef12e6668 method=java.util.HashMap.hash(Ljava/lang/Object;)I @ 1
+Event: 1,532 Thread 0x00007faf0000a000 Uncommon trap: reason=unstable_if action=reinterpret pc=0x00007faef141676c method=org.codehaus.plexus.util.xml.pull.MXParser.isS(C)Z @ 21
+
+Internal exceptions (10 events):
+Event: 0,513 Thread 0x00007faf0000a000 Exception <a 'java/lang/ArrayIndexOutOfBoundsException'> (0x00000000d7a6ad38) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/runtime/sharedRuntime.cpp, line 605]
+Event: 0,713 Thread 0x00007faf0000a000 Exception <a 'java/lang/ArrayIndexOutOfBoundsException'> (0x00000000d89282f0) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/runtime/sharedRuntime.cpp, line 605]
+Event: 0,714 Thread 0x00007faf0000a000 Exception <a 'java/lang/ArrayIndexOutOfBoundsException'> (0x00000000d8929f98) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/runtime/sharedRuntime.cpp, line 605]
+Event: 0,813 Thread 0x00007faf0000a000 Exception <a 'java/lang/NoClassDefFoundError': org/slf4j/Logger> (0x00000000d8dcf000) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/classfile/systemDictionary.cpp, line 199]
+Event: 0,873 Thread 0x00007faf0000a000 Exception <a 'java/lang/NoClassDefFoundError': org/slf4j/LoggerFactory> (0x00000000d714afc8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/classfile/systemDictionary.cpp, line 199]
+Event: 0,873 Thread 0x00007faf0000a000 Exception <a 'java/lang/NoClassDefFoundError'> (0x00000000d714afc8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/oops/instanceKlass.cpp, line 964]
+Event: 1,252 Thread 0x00007faf0000a000 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000d85f6ec8) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/prims/methodHandles.cpp, line 1146]
+Event: 1,254 Thread 0x00007faf0000a000 Exception <a 'java/lang/NoSuchFieldError': method resolution failed> (0x00000000d8604588) thrown at [/HUDSON/workspace/8-2-build-linux-amd64/jdk8u151/9699/hotspot/src/share/vm/prims/methodHandles.cpp, line 1146]
+Event: 1,517 Thread 0x00007faf0000a000 Implicit null exception at 0x00007faef139fbb5 to 0x00007faef139fd99
+Event: 1,517 Thread 0x00007faf0000a000 Implicit null exception at 0x00007faef12e65ef to 0x00007faef12e6659
+
+Events (10 events):
+Event: 1,516 loading class org/apache/maven/plugin/MojoExecution$Source done
+Event: 1,517 Thread 0x00007faf0000a000 Uncommon trap: trap_request=0xffffff65 fr.pc=0x00007faef139fda8
+Event: 1,517 Thread 0x00007faf0000a000 DEOPT PACKING pc=0x00007faef139fda8 sp=0x00007faf09b0e6b0
+Event: 1,517 Thread 0x00007faf0000a000 DEOPT UNPACKING pc=0x00007faef1005229 sp=0x00007faf09b0e618 mode 2
+Event: 1,517 Thread 0x00007faf0000a000 Uncommon trap: trap_request=0xffffff65 fr.pc=0x00007faef12e6668
+Event: 1,517 Thread 0x00007faf0000a000 DEOPT PACKING pc=0x00007faef12e6668 sp=0x00007faf09b0e660
+Event: 1,517 Thread 0x00007faf0000a000 DEOPT UNPACKING pc=0x00007faef1005229 sp=0x00007faf09b0e620 mode 2
+Event: 1,532 Thread 0x00007faf0000a000 Uncommon trap: trap_request=0xffffff65 fr.pc=0x00007faef141676c
+Event: 1,533 Thread 0x00007faf0000a000 DEOPT PACKING pc=0x00007faef141676c sp=0x00007faf09b0dce0
+Event: 1,533 Thread 0x00007faf0000a000 DEOPT UNPACKING pc=0x00007faef1005229 sp=0x00007faf09b0dc30 mode 2
+
+
+Dynamic libraries:
+00400000-00401000 r-xp 00000000 08:05 8532988                            /usr/lib/jvm/java-8-oracle/bin/java
+00600000-00601000 rw-p 00000000 08:05 8532988                            /usr/lib/jvm/java-8-oracle/bin/java
+018f6000-01917000 rw-p 00000000 00:00 0                                  [heap]
+84c00000-89f00000 rw-p 00000000 00:00 0 
+89f00000-d6f00000 ---p 00000000 00:00 0 
+d6f00000-db700000 rw-p 00000000 00:00 0 
+db700000-100000000 ---p 00000000 00:00 0 
+100000000-1001c0000 rw-p 00000000 00:00 0 
+1001c0000-140000000 ---p 00000000 00:00 0 
+7faeb0000000-7faeb0021000 rw-p 00000000 00:00 0 
+7faeb0021000-7faeb4000000 ---p 00000000 00:00 0 
+7faeb4bd7000-7faeb4be8000 r-xp 00000000 08:05 8795859                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnio.so
+7faeb4be8000-7faeb4de7000 ---p 00011000 08:05 8795859                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnio.so
+7faeb4de7000-7faeb4de8000 rw-p 00010000 08:05 8795859                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnio.so
+7faeb4de8000-7faeb7de9000 rw-p 00000000 00:00 0 
+7faeb7de9000-7faeb7e00000 r-xp 00000000 08:05 8795856                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+7faeb7e00000-7faeb7fff000 ---p 00017000 08:05 8795856                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+7faeb7fff000-7faeb8000000 rw-p 00016000 08:05 8795856                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+7faeb8000000-7faeb8021000 rw-p 00000000 00:00 0 
+7faeb8021000-7faebc000000 ---p 00000000 00:00 0 
+7faebc000000-7faebc021000 rw-p 00000000 00:00 0 
+7faebc021000-7faec0000000 ---p 00000000 00:00 0 
+7faec0000000-7faec04c8000 rw-p 00000000 00:00 0 
+7faec04c8000-7faec4000000 ---p 00000000 00:00 0 
+7faec4000000-7faec43e2000 rw-p 00000000 00:00 0 
+7faec43e2000-7faec8000000 ---p 00000000 00:00 0 
+7faec8000000-7faec8021000 rw-p 00000000 00:00 0 
+7faec8021000-7faecc000000 ---p 00000000 00:00 0 
+7faecc000000-7faecc3f7000 rw-p 00000000 00:00 0 
+7faecc3f7000-7faed0000000 ---p 00000000 00:00 0 
+7faed0000000-7faed0021000 rw-p 00000000 00:00 0 
+7faed0021000-7faed4000000 ---p 00000000 00:00 0 
+7faed4000000-7faed4021000 rw-p 00000000 00:00 0 
+7faed4021000-7faed8000000 ---p 00000000 00:00 0 
+7faed8000000-7faed8021000 rw-p 00000000 00:00 0 
+7faed8021000-7faedc000000 ---p 00000000 00:00 0 
+7faedc000000-7faedc021000 rw-p 00000000 00:00 0 
+7faedc021000-7faee0000000 ---p 00000000 00:00 0 
+7faee0000000-7faee0021000 rw-p 00000000 00:00 0 
+7faee0021000-7faee4000000 ---p 00000000 00:00 0 
+7faee4000000-7faee4021000 rw-p 00000000 00:00 0 
+7faee4021000-7faee8000000 ---p 00000000 00:00 0 
+7faee8000000-7faee8021000 rw-p 00000000 00:00 0 
+7faee8021000-7faeec000000 ---p 00000000 00:00 0 
+7faeec0bd000-7faeec0c0000 ---p 00000000 00:00 0 
+7faeec0c0000-7faeec0f6000 rw-p 00000000 00:00 0 
+7faeec0f6000-7faeec0f7000 r--p 00000000 00:00 0 
+7faeec0f7000-7faeec277000 rw-p 00000000 00:00 0 
+7faeec277000-7faeec2f7000 ---p 00000000 00:00 0 
+7faeec2f7000-7faeec2fc000 r--s 0009a000 08:05 8658135                    /usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar
+7faeec2fc000-7faeec4fc000 rw-p 00000000 00:00 0 
+7faeec4fc000-7faeec4fe000 r--s 0000d000 08:05 2243065                    /home/devcx/node_modules/netbeans-8.2/java/maven-nblib/netbeans-eventspy.jar
+7faeec4fe000-7faeec502000 r--s 00021000 08:05 2242995                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-model-builder-3.0.5.jar
+7faeec502000-7faeec50c000 r--s 00116000 08:05 8658146                    /usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar
+7faeec50c000-7faeec528000 r--s 00393000 08:05 8658139                    /usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar
+7faeec528000-7faeec529000 r--s 0000a000 08:05 2243056                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-embedder-3.0.5.jar
+7faeec529000-7faeec52a000 r--s 00002000 08:05 2243043                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/wagon-http-shared-2.10.jar
+7faeec52a000-7faeec52d000 r--s 00008000 08:05 2242942                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-settings-builder-3.0.5.jar
+7faeec52d000-7faeec531000 r--s 00013000 08:05 2243076                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/aether-api-1.13.1.jar
+7faeec531000-7faeec533000 r--s 0000c000 08:05 2242960                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-aether-provider-3.0.5.jar
+7faeec533000-7faeec535000 r--s 00000000 08:05 2242726                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/plexus-component-annotations-1.5.5.jar
+7faeec535000-7faeec537000 r--s 00006000 08:05 2242913                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/aether-connector-wagon-1.13.1.jar
+7faeec537000-7faeec53e000 r--s 0002b000 08:05 2243016                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/sisu-inject-plexus-2.3.0.jar
+7faeec53e000-7faeec540000 r--s 0000b000 08:05 2243028                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/wagon-provider-api-2.10.jar
+7faeec540000-7faeec544000 r--s 00033000 08:05 2243068                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/plexus-utils-2.0.6.jar
+7faeec544000-7faeec573000 r--s 001c8000 08:05 2243040                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/wagon-http-2.10-shaded.jar
+7faeec573000-7faeec575000 r--s 0000b000 08:05 2243041                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-plugin-api-3.0.5.jar
+7faeec575000-7faeec577000 r--s 0000b000 08:05 2243055                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-artifact-3.0.5.jar
+7faeec577000-7faeec57d000 r--s 0003f000 08:05 2243071                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-compat-3.0.5.jar
+7faeec57d000-7faeec57e000 ---p 00000000 00:00 0 
+7faeec57e000-7faeec67e000 rw-p 00000000 00:00 0 
+7faeec67e000-7faeec681000 ---p 00000000 00:00 0 
+7faeec681000-7faeec77f000 rw-p 00000000 00:00 0 
+7faeec77f000-7faeec782000 ---p 00000000 00:00 0 
+7faeec782000-7faeec880000 rw-p 00000000 00:00 0 
+7faeec880000-7faeec883000 ---p 00000000 00:00 0 
+7faeec883000-7faeec981000 rw-p 00000000 00:00 0 
+7faeec981000-7faeec984000 ---p 00000000 00:00 0 
+7faeec984000-7faeeca82000 rw-p 00000000 00:00 0 
+7faeeca82000-7faeeca85000 ---p 00000000 00:00 0 
+7faeeca85000-7faeecb83000 rw-p 00000000 00:00 0 
+7faeecb83000-7faeece5c000 r--p 00000000 08:05 8258452                    /usr/lib/locale/locale-archive
+7faeece5c000-7faeece5f000 ---p 00000000 00:00 0 
+7faeece5f000-7faeecf5d000 rw-p 00000000 00:00 0 
+7faeecf5d000-7faeecf60000 ---p 00000000 00:00 0 
+7faeecf60000-7faeed05e000 rw-p 00000000 00:00 0 
+7faeed05e000-7faeed05f000 ---p 00000000 00:00 0 
+7faeed05f000-7faef1000000 rw-p 00000000 00:00 0 
+7faef1000000-7faef14c0000 rwxp 00000000 00:00 0 
+7faef14c0000-7faf00000000 ---p 00000000 00:00 0 
+7faf00000000-7faf00931000 rw-p 00000000 00:00 0 
+7faf00931000-7faf04000000 ---p 00000000 00:00 0 
+7faf04000000-7faf04001000 r--s 00002000 08:05 2243085                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/wagon-file-2.10.jar
+7faf04001000-7faf0400d000 r--s 0007d000 08:05 2243082                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-core-3.0.5.jar
+7faf0400d000-7faf0402c000 r--s 00154000 08:05 2243083                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/sisu-guava-0.9.9.jar
+7faf0402c000-7faf0402f000 r--s 0001d000 08:05 2243069                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/aether-impl-1.13.1.jar
+7faf0402f000-7faf04f10000 rw-p 00000000 00:00 0 
+7faf04f10000-7faf050e9000 r--s 03d5a000 08:05 8658130                    /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar
+7faf050e9000-7faf05d39000 rw-p 00000000 00:00 0 
+7faf05d39000-7faf05d3a000 ---p 00000000 00:00 0 
+7faf05d3a000-7faf05e3a000 rw-p 00000000 00:00 0 
+7faf05e3a000-7faf05e3b000 ---p 00000000 00:00 0 
+7faf05e3b000-7faf05f3b000 rw-p 00000000 00:00 0 
+7faf05f3b000-7faf05f3c000 ---p 00000000 00:00 0 
+7faf05f3c000-7faf0603c000 rw-p 00000000 00:00 0 
+7faf0603c000-7faf0603d000 ---p 00000000 00:00 0 
+7faf0603d000-7faf06167000 rw-p 00000000 00:00 0 
+7faf06167000-7faf063cf000 ---p 00000000 00:00 0 
+7faf063cf000-7faf063f9000 rw-p 00000000 00:00 0 
+7faf063f9000-7faf06660000 ---p 00000000 00:00 0 
+7faf06660000-7faf06685000 rw-p 00000000 00:00 0 
+7faf06685000-7faf067a9000 ---p 00000000 00:00 0 
+7faf067a9000-7faf067bd000 rw-p 00000000 00:00 0 
+7faf067bd000-7faf06b6a000 ---p 00000000 00:00 0 
+7faf06b6a000-7faf06b85000 r-xp 00000000 08:05 8795852                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+7faf06b85000-7faf06d85000 ---p 0001b000 08:05 8795852                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+7faf06d85000-7faf06d86000 rw-p 0001b000 08:05 8795852                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+7faf06d86000-7faf06d91000 r-xp 00000000 08:05 8912980                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7faf06d91000-7faf06f90000 ---p 0000b000 08:05 8912980                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7faf06f90000-7faf06f91000 r--p 0000a000 08:05 8912980                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7faf06f91000-7faf06f92000 rw-p 0000b000 08:05 8912980                    /lib/x86_64-linux-gnu/libnss_files-2.23.so
+7faf06f92000-7faf06f98000 rw-p 00000000 00:00 0 
+7faf06f98000-7faf06fa3000 r-xp 00000000 08:05 8912983                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7faf06fa3000-7faf071a2000 ---p 0000b000 08:05 8912983                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7faf071a2000-7faf071a3000 r--p 0000a000 08:05 8912983                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7faf071a3000-7faf071a4000 rw-p 0000b000 08:05 8912983                    /lib/x86_64-linux-gnu/libnss_nis-2.23.so
+7faf071a4000-7faf071ba000 r-xp 00000000 08:05 8912910                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7faf071ba000-7faf073b9000 ---p 00016000 08:05 8912910                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7faf073b9000-7faf073ba000 r--p 00015000 08:05 8912910                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7faf073ba000-7faf073bb000 rw-p 00016000 08:05 8912910                    /lib/x86_64-linux-gnu/libnsl-2.23.so
+7faf073bb000-7faf073bd000 rw-p 00000000 00:00 0 
+7faf073bd000-7faf073c5000 r-xp 00000000 08:05 8912989                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7faf073c5000-7faf075c4000 ---p 00008000 08:05 8912989                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7faf075c4000-7faf075c5000 r--p 00007000 08:05 8912989                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7faf075c5000-7faf075c6000 rw-p 00008000 08:05 8912989                    /lib/x86_64-linux-gnu/libnss_compat-2.23.so
+7faf075c6000-7faf075f1000 r-xp 00000000 08:05 8795846                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+7faf075f1000-7faf077f0000 ---p 0002b000 08:05 8795846                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+7faf077f0000-7faf077f2000 rw-p 0002a000 08:05 8795846                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+7faf077f2000-7faf077ff000 r-xp 00000000 08:05 8795851                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+7faf077ff000-7faf079ff000 ---p 0000d000 08:05 8795851                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+7faf079ff000-7faf07a01000 rw-p 0000d000 08:05 8795851                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+7faf07a01000-7faf07a08000 r-xp 00000000 08:05 8912985                    /lib/x86_64-linux-gnu/librt-2.23.so
+7faf07a08000-7faf07c07000 ---p 00007000 08:05 8912985                    /lib/x86_64-linux-gnu/librt-2.23.so
+7faf07c07000-7faf07c08000 r--p 00006000 08:05 8912985                    /lib/x86_64-linux-gnu/librt-2.23.so
+7faf07c08000-7faf07c09000 rw-p 00007000 08:05 8912985                    /lib/x86_64-linux-gnu/librt-2.23.so
+7faf07c09000-7faf07d11000 r-xp 00000000 08:05 8912994                    /lib/x86_64-linux-gnu/libm-2.23.so
+7faf07d11000-7faf07f10000 ---p 00108000 08:05 8912994                    /lib/x86_64-linux-gnu/libm-2.23.so
+7faf07f10000-7faf07f11000 r--p 00107000 08:05 8912994                    /lib/x86_64-linux-gnu/libm-2.23.so
+7faf07f11000-7faf07f12000 rw-p 00108000 08:05 8912994                    /lib/x86_64-linux-gnu/libm-2.23.so
+7faf07f12000-7faf08be5000 r-xp 00000000 08:05 8795829                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+7faf08be5000-7faf08de4000 ---p 00cd3000 08:05 8795829                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+7faf08de4000-7faf08ebe000 rw-p 00cd2000 08:05 8795829                    /usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+7faf08ebe000-7faf08f09000 rw-p 00000000 00:00 0 
+7faf08f09000-7faf090c9000 r-xp 00000000 08:05 8917478                    /lib/x86_64-linux-gnu/libc-2.23.so
+7faf090c9000-7faf092c9000 ---p 001c0000 08:05 8917478                    /lib/x86_64-linux-gnu/libc-2.23.so
+7faf092c9000-7faf092cd000 r--p 001c0000 08:05 8917478                    /lib/x86_64-linux-gnu/libc-2.23.so
+7faf092cd000-7faf092cf000 rw-p 001c4000 08:05 8917478                    /lib/x86_64-linux-gnu/libc-2.23.so
+7faf092cf000-7faf092d3000 rw-p 00000000 00:00 0 
+7faf092d3000-7faf092d6000 r-xp 00000000 08:05 8912988                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7faf092d6000-7faf094d5000 ---p 00003000 08:05 8912988                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7faf094d5000-7faf094d6000 r--p 00002000 08:05 8912988                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7faf094d6000-7faf094d7000 rw-p 00003000 08:05 8912988                    /lib/x86_64-linux-gnu/libdl-2.23.so
+7faf094d7000-7faf094ed000 r-xp 00000000 08:05 8657984                    /usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+7faf094ed000-7faf096ec000 ---p 00016000 08:05 8657984                    /usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+7faf096ec000-7faf096ed000 rw-p 00015000 08:05 8657984                    /usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+7faf096ed000-7faf09705000 r-xp 00000000 08:05 8912982                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7faf09705000-7faf09904000 ---p 00018000 08:05 8912982                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7faf09904000-7faf09905000 r--p 00017000 08:05 8912982                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7faf09905000-7faf09906000 rw-p 00018000 08:05 8912982                    /lib/x86_64-linux-gnu/libpthread-2.23.so
+7faf09906000-7faf0990a000 rw-p 00000000 00:00 0 
+7faf0990a000-7faf09930000 r-xp 00000000 08:05 8912913                    /lib/x86_64-linux-gnu/ld-2.23.so
+7faf09930000-7faf09932000 r--s 00009000 08:05 2243086                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/commons-cli-1.2.jar
+7faf09932000-7faf09934000 r--s 00006000 08:05 2242847                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-repository-metadata-3.0.5.jar
+7faf09934000-7faf09936000 r--s 0000a000 08:05 2243057                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-settings-3.0.5.jar
+7faf09936000-7faf09937000 r--s 00006000 08:05 2242996                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/plexus-sec-dispatcher-1.3.jar
+7faf09937000-7faf0993f000 r--s 00050000 08:05 2243027                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/sisu-guice-3.1.0-no_aop.jar
+7faf0993f000-7faf09941000 r--s 00002000 08:05 2243075                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/plexus-cipher-1.7.jar
+7faf09941000-7faf09945000 r--s 0001c000 08:05 2243070                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/aether-util-1.13.1.jar
+7faf09945000-7faf09a10000 rw-p 00000000 00:00 0 
+7faf09a10000-7faf09a13000 ---p 00000000 00:00 0 
+7faf09a13000-7faf09b15000 rw-p 00000000 00:00 0 
+7faf09b15000-7faf09b16000 r--s 00003000 08:05 2243077                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/aether-spi-1.13.1.jar
+7faf09b16000-7faf09b18000 r--s 0000d000 08:05 2242997                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/plexus-interpolation-1.14.jar
+7faf09b18000-7faf09b1a000 r--s 00026000 08:05 2243074                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/maven-model-3.0.5.jar
+7faf09b1a000-7faf09b21000 r--s 0003f000 08:05 2243042                    /home/devcx/node_modules/netbeans-8.2/java/maven/lib/sisu-inject-bean-2.3.0.jar
+7faf09b21000-7faf09b23000 r--s 0000a000 08:05 2243030                    /home/devcx/node_modules/netbeans-8.2/java/maven/boot/plexus-classworlds-2.4.jar
+7faf09b23000-7faf09b2b000 rw-s 00000000 08:05 3156056                    /tmp/hsperfdata_devcx/11226
+7faf09b2b000-7faf09b2c000 rw-p 00000000 00:00 0 
+7faf09b2c000-7faf09b2d000 r--p 00000000 00:00 0 
+7faf09b2d000-7faf09b2f000 rw-p 00000000 00:00 0 
+7faf09b2f000-7faf09b30000 r--p 00025000 08:05 8912913                    /lib/x86_64-linux-gnu/ld-2.23.so
+7faf09b30000-7faf09b31000 rw-p 00026000 08:05 8912913                    /lib/x86_64-linux-gnu/ld-2.23.so
+7faf09b31000-7faf09b32000 rw-p 00000000 00:00 0 
+7fffb9e10000-7fffb9e31000 rw-p 00000000 00:00 0                          [stack]
+7fffb9eaa000-7fffb9eac000 r--p 00000000 00:00 0                          [vvar]
+7fffb9eac000-7fffb9eae000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -Dclassworlds.conf=/home/devcx/node_modules/netbeans-8.2/java/maven/bin/m2.conf -Dmaven.home=/home/devcx/node_modules/netbeans-8.2/java/maven 
+java_command: org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=/home/devcx/node_modules/netbeans-8.2/java/maven-nblib/netbeans-eventspy.jar clean install
+java_class_path (initial): /home/devcx/node_modules/netbeans-8.2/java/maven/boot/plexus-classworlds-2.4.jar
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+PATH=/home/devcx/bin:/home/devcx/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
+LD_LIBRARY_PATH=/usr/lib/jvm/java-8-oracle/jre/lib/amd64:/usr/lib/jvm/java-8-oracle/jre/lib/i386:
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xacbe10], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xacbe10], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0x924f90], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0x924f90], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0x924f90], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0x924f90], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR1: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGUSR2: [libjvm.so+0x9267d0], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: [libjvm.so+0x927bd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGINT: SIG_IGN, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGTERM: [libjvm.so+0x927bd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGQUIT: [libjvm.so+0x927bd0], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=16.04
+DISTRIB_CODENAME=xenial
+DISTRIB_DESCRIPTION="Ubuntu 16.04.3 LTS"
+
+uname:Linux 4.4.0-101-generic #124-Ubuntu SMP Fri Nov 10 18:29:59 UTC 2017 x86_64
+libc:glibc 2.23 NPTL 2.23 
+rlimit: STACK 8192k, CORE 0k, NPROC 31392, NOFILE 1048576, AS infinity
+load average:1,03 0,98 0,89
+
+/proc/meminfo:
+MemTotal:        8077220 kB
+MemFree:         1697828 kB
+MemAvailable:    4171084 kB
+Buffers:          210328 kB
+Cached:          2851436 kB
+SwapCached:            0 kB
+Active:          4357192 kB
+Inactive:        1694208 kB
+Active(anon):    3011108 kB
+Inactive(anon):   425396 kB
+Active(file):    1346084 kB
+Inactive(file):  1268812 kB
+Unevictable:         120 kB
+Mlocked:             120 kB
+SwapTotal:       4882428 kB
+SwapFree:        4882428 kB
+Dirty:               152 kB
+Writeback:             0 kB
+AnonPages:       2989792 kB
+Mapped:           549896 kB
+Shmem:            446872 kB
+Slab:             204160 kB
+SReclaimable:     158580 kB
+SUnreclaim:        45580 kB
+KernelStack:       13440 kB
+PageTables:        56356 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     8921036 kB
+Committed_AS:   10108236 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:   1509376 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      193132 kB
+DirectMap2M:     8099840 kB
+
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, aes, clmul, ht, tsc, tscinvbit
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i5-2410M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 2699.984
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx lahf_lm epb tpr_shadow vnmi flexpriority ept vpid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 4589.89
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i5-2410M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 2699.984
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx lahf_lm epb tpr_shadow vnmi flexpriority ept vpid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 4589.89
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i5-2410M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 2699.984
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx lahf_lm epb tpr_shadow vnmi flexpriority ept vpid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 4589.89
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 42
+model name	: Intel(R) Core(TM) i5-2410M CPU @ 2.30GHz
+stepping	: 7
+microcode	: 0x25
+cpu MHz		: 2699.984
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx lahf_lm epb tpr_shadow vnmi flexpriority ept vpid xsaveopt dtherm ida arat pln pts
+bugs		:
+bogomips	: 4589.89
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 8077220k(1697828k free), swap 4882428k(4882428k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (25.151-b12) for linux-amd64 JRE (1.8.0_151-b12), built on Sep  5 2017 19:20:58 by "java_re" with gcc 4.3.0 20080428 (Red Hat 4.3.0-8)
+
+time: Wed Nov 22 19:03:48 2017
+elapsed time: 1 seconds (0d 0h 0m 1s)
+

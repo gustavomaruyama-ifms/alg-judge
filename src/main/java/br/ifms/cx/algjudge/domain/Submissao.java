@@ -11,9 +11,13 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,12 +38,29 @@ public class Submissao {
     @SequenceGenerator(sequenceName = "seq_submissao", name = "gen_seq_submissao", allocationSize = 1, initialValue = 1)
     @GeneratedValue(generator = "gen_seq_submissao", strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(length = 50000)
     private String codigoFonte;
     @Temporal(TemporalType.DATE)
     private Date dataEnvio;
+    private Boolean ativo = true;
     private Long tempoExecucao;
-    @Column(nullable = false)
-    private String situacao;
+    @Enumerated(EnumType.STRING)
+    private SituacaoSubmissaoEnum situacao;
+    @ManyToOne( fetch = FetchType.LAZY)
+    private Problema problema;
+
+    public Submissao() {
+        this.ativo = true;
+    }
+    
+    
+    public SituacaoSubmissaoEnum getSituacao() {
+        return situacao;
+    }
+    
+    public void setSituacao(SituacaoSubmissaoEnum situacao){
+      this.situacao = situacao;
+    };
 
     /**
      * Metodo que retorna uma {@link List} com todos as situações de uma
@@ -90,4 +111,22 @@ public class Submissao {
     public void setTempoExecucao(Long tempoExecucao) {
         this.tempoExecucao = tempoExecucao;
     }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public Problema getProblema() {
+        return problema;
+    }
+
+    public void setProblema(Problema problema) {
+        this.problema = problema;
+    }
+    
+    
 }

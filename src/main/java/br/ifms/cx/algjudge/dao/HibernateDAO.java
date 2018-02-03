@@ -1,6 +1,7 @@
 package br.ifms.cx.algjudge.dao;
 
 import java.io.Serializable;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,11 +46,15 @@ public class HibernateDAO<T> {
 	public T get(Serializable id) {
 		return (T) getSession().get(this.clazz, id);
 	}
+        
+        public List<T> getList (Integer qtd) {
+            return getSession().createQuery("select t from T t where t.ativo is true").list();
+        }
 
 	protected Query createQuery(String query) {
 		return getSession().createQuery(query);
 	}
-
+        
 	protected Criteria createCriteria() {
 		return getSession().createCriteria(this.clazz);
 	}

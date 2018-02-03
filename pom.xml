@@ -46,6 +46,17 @@
                             </artifactItems>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/lib</outputDirectory>
+                            <includeScope>system</includeScope>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
@@ -68,12 +79,13 @@
             <version>3.0.1</version>
         </dependency>
         
-        <!-- WEBSOCKET -->        
+        <!-- WEBSOCKET        
         <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>
             <version>1.0</version>
         </dependency>
+        
         
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
@@ -87,12 +99,13 @@
             <version>1.1</version>
         </dependency>
         
-        <dependency>
-            <groupId>org.glassfish.tyrus</groupId>
-            <artifactId>tyrus-client</artifactId>
-            <version>1.1</version>
-        </dependency>
-
+        
+               <dependency>
+                   <groupId>org.glassfish.tyrus</groupId>
+                   <artifactId>tyrus-client</artifactId>
+                   <version>1.1</version>
+               </dependency>
+        -->
         <!-- Jersey -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>

@@ -1,0 +1,6 @@
+INSERT INTO problema VALUES (1, false, 'Faça um programa que leia dois valores inteiros e imprima o maior entre eles.', 'A entrada consiste na leitura de dois valores inteiros.', 'Seu programa deve escrever na tela o maior valor entre os dois valores lidos conforme os exemplos fornecidos.', 'O Maior');
+
+INSERT INTO caso_de_teste VALUES (2, true, E'20\n5', true, 'O maior número é: 20', 21);
+INSERT INTO caso_de_teste VALUES (1, true, E'10\n50', true, 'O maior número é: 50', 21);
+INSERT INTO caso_de_teste VALUES (3, true, E'31\n31', true, 'Os números são iguais', 1);
+INSERT INTO caso_de_teste VALUES (4, true, E'0\n0', false, 'Os números são iguais', 1);

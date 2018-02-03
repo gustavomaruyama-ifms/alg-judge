@@ -1,0 +1,16 @@
+{
+	"problema":{
+		"id":"1"
+	},
+	"codigoFonte":"	algoritmo\n
+					declare num1, num2 numerico\n
+					leia num1\n
+					leia num2\n
+					se num1 > num2 entao\n
+						escreva \"O maior número é: \", num1\n
+					se num2 > num1 entao\n
+						escreva \"O maior número é: \", num2\n
+					se num1 = num2 entao\n
+						escreva \"Os números são iguais\"\n
+					fim_algoritmo.\n"	
+}
