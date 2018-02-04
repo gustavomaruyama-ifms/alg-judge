@@ -74,13 +74,15 @@
             <version>3.0.1</version>
         </dependency>
         
+        
         <!-- WEBSOCKET -->        
+        <!--
         <dependency>
             <groupId>javax.websocket</groupId>
             <artifactId>javax.websocket-api</artifactId>
             <version>1.0</version>
         </dependency>
-        
+      
         <dependency>
             <groupId>org.glassfish.tyrus</groupId>
             <artifactId>tyrus-server</artifactId>
@@ -98,7 +100,7 @@
             <artifactId>tyrus-client</artifactId>
             <version>1.1</version>
         </dependency>
-
+        -->
         <!-- Jersey -->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
