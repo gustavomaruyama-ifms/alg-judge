@@ -84,7 +84,11 @@ public class UsuarioResource {
             }
 
             Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
-            String token = JWT.create().withClaim("email", usuario.getEmail()).withClaim("papel", usuario.getPapel()).sign(algorithm);;
+            String token = JWT.create()
+                    .withClaim("email", usuario.getEmail())
+                    .withClaim("papel", usuario.getPapel())
+                    .withClaim("id", usuario.getId())
+                    .sign(algorithm);
             return Response.Ok(token);
         } catch (UsuarioInexistenteException ex) {
             return Response.Error("Usuário inválido");
