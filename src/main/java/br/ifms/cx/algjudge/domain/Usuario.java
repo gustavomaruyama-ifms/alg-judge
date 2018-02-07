@@ -5,6 +5,7 @@
  */
 package br.ifms.cx.algjudge.domain;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @author Gustavo
  */
 @Entity
-public class Usuario {
+public class Usuario implements Serializable {
 
     public static final String PAPEL_ADMINISTRADOR = "Administrador";
     public static final String PAPEL_ALUNO = "Aluno";
@@ -40,9 +41,11 @@ public class Usuario {
     private String senha;
     @Column(nullable = false)
     private String papel;
+    @Column(nullable = false)
+    private Boolean ativo;
 
     public Usuario() {
-
+        this.ativo = Boolean.TRUE;
     }
 
     /**
@@ -101,5 +104,13 @@ public class Usuario {
 
     public void setPapel(String papel) {
         this.papel = papel;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }

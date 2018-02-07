@@ -49,7 +49,7 @@ public class HibernateDAO<T> {
 	protected Query createQuery(String query) {
 		return getSession().createQuery(query);
 	}
-
+        
 	protected Criteria createCriteria() {
 		return getSession().createCriteria(this.clazz);
 	}

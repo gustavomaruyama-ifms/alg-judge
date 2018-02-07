@@ -8,19 +8,25 @@ import br.ifms.cx.algjudge.exception.UsuarioInexistenteException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import java.io.UnsupportedEncodingException;
-
+import javax.ws.rs.HeaderParam;
+import org.glassfish.jersey.internal.util.Base64;
+import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import org.glassfish.jersey.internal.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * @author Rodrigo
+ */
 
 @Path("/usuario")
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -96,6 +102,63 @@ public class UsuarioResource {
             return Response.Error("Senha inválida");
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
             return Response.Error("");
+        }
+    }
+    
+    @GET
+    @Path("/{id}")
+    public Usuario getUsuario  (@PathParam("id") Integer id) {
+        return db.get(id);
+    }
+
+    @GET
+    @Path("/list/{papel}/{pag}/{qtd}")
+    public List <Usuario> getUsuarios  
+        (
+            @PathParam("papel") String papel , 
+            @PathParam("pag") Integer pag, 
+            @PathParam("qtd") Integer id
+        ) 
+    {
+        return db.listar(papel);  
+    }
+    
+    @POST
+    @Path("/admin")
+    @Transactional
+    public Response inserirAdmin (Usuario u) {
+        try {
+        db.inserirAdmin(u);
+          return Response.Ok("Usuatio Incerido com sucesso");
+        } catch (Exception e) {
+          System.out.println("Falhou");
+            return Response.Error(e.getMessage()); 
+        }
+    }
+   
+    @POST
+    @Path("/professor")
+    @Transactional
+    public Response inserirProfessor (Usuario u) {
+        try {
+        db.inserirProfessor(u);
+          return Response.Ok("Usuatio Incerido com sucesso");
+        } catch (Exception e) {
+          System.out.println("Falhou");
+            return Response.Error(e.getMessage()); 
+        }
+    }
+    
+    @POST
+    @Path("/aluno")
+    @Transactional
+    public Response inserirAluno (Usuario u) {
+        try {
+        db.inserirAluno(u);
+          return Response.Ok("Usuatio Incerido com sucesso");
+        } catch (Exception e) {
+          System.out.println("Falhou");
+          return Response.Error(e.getMessage()); 
         }
     }
 }
