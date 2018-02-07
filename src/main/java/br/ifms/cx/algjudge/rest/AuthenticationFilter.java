@@ -3,8 +3,6 @@
  */
 package br.ifms.cx.algjudge.rest;
 
-import br.ifms.cx.algjudge.dao.UsuarioDAO;
-import br.ifms.cx.algjudge.domain.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -12,22 +10,21 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.security.DenyAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ResourceInfo;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-
-import org.glassfish.jersey.internal.util.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * This filter verify the access permissions for a user based on username and
@@ -39,9 +36,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
     @Context
     private ResourceInfo resourceInfo;
-
-    @Autowired
-    private UsuarioDAO usuarioDAO;
 
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
     private static final String AUTHENTICATION_JWT_SCHEME = "Bearer";
@@ -110,11 +104,30 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
+            String papel = jwt.getClaim("papel").asString();
+            Set<String> rolesSet;
+            RolesAllowed rolesAnnotation;
+            
+            if (metodo.isAnnotationPresent(RolesAllowed.class)) {
+                rolesAnnotation = metodo.getAnnotation(RolesAllowed.class);
+                rolesSet = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
+                verificarPapel(papel, rolesSet, requestContext);
+            } else if (classe.isAnnotationPresent(RolesAllowed.class)) {
+                rolesAnnotation = (RolesAllowed) classe.getAnnotation(RolesAllowed.class);
+                rolesSet = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
+                verificarPapel(papel, rolesSet, requestContext);
+            }
+
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
             Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch(JWTVerificationException ex){
+        } catch (JWTVerificationException ex) {
             negarAcesso(requestContext);
-            return;
+        }
+    }
+
+    private void verificarPapel(String papel, Set<String> rolesSet, ContainerRequestContext requestContext) {
+        if (!rolesSet.contains(papel)) {
+            negarAcesso(requestContext);
         }
     }
 }

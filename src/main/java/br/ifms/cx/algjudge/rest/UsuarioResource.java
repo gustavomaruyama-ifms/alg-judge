@@ -6,9 +6,7 @@ import br.ifms.cx.algjudge.domain.Usuario;
 import br.ifms.cx.algjudge.exception.SenhaInvalidaException;
 import br.ifms.cx.algjudge.exception.UsuarioInexistenteException;
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import java.io.UnsupportedEncodingException;
 
 import javax.ws.rs.Consumes;
@@ -19,7 +17,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.internal.util.Base64;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -43,10 +40,10 @@ public class UsuarioResource {
     @Transactional
     public Response signup(Usuario usuario) {
         try {
-            if(db.buscarUsuarioPorEmail(usuario.getEmail())!=null){
+            if (db.buscarUsuarioPorEmail(usuario.getEmail()) != null) {
                 return Response.Error("Usuário já existe");
             }
-            
+
             if (null == usuario.getSenha() || usuario.getSenha().length() < 6) {
                 return Response.Error("Senha inválida");
             }
@@ -66,13 +63,18 @@ public class UsuarioResource {
 
         //Split username and password tokens
         String splited[] = emailESenha.split(":");
-        String email = splited[0];
-        String senha = splited[1];
-
-        // Busca usuario pelo email no banco de dados
-        Usuario usuario = db.buscarUsuarioPorEmail(email);
-
         try {
+            
+            if (splited.length < 2) {
+                throw new UsuarioInexistenteException();
+            }
+
+            String email = splited[0];
+            String senha = splited[1];
+
+            // Busca usuario pelo email no banco de dados
+            Usuario usuario = db.buscarUsuarioPorEmail(email);
+
             if (usuario == null) {
                 throw new UsuarioInexistenteException();
             }
@@ -82,12 +84,7 @@ public class UsuarioResource {
             }
 
             Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
-            String token = JWT.create()
-                    .withIssuer(usuario.getEmail() + " " + usuario.getPapel())
-                    .sign(algorithm);
-
-            JWTVerifier verifier = JWT.require(algorithm).build();
-            DecodedJWT jwt = verifier.verify(token);
+            String token = JWT.create().withClaim("email", usuario.getEmail()).withClaim("papel", usuario.getPapel()).sign(algorithm);;
             return Response.Ok(token);
         } catch (UsuarioInexistenteException ex) {
             return Response.Error("Usuário inválido");

@@ -47,6 +47,7 @@ public class ProblemaResource {
 
     @GET
     @Path("/list/{qtde}")
+    @RolesAllowed({Usuario.PAPEL_ALUNO})
     public List<Problema> listarProblemas(@PathParam("qtde") Integer qtde) {
         return db.listarProblemas(qtde);
     }
