@@ -21,7 +21,7 @@ public class MyApplication extends Application {
     public Set<Class<?>> getClasses() {
         final Set<Class<?>> resources = new HashSet<Class<?>>();
         resources.add(CorsFilter.class);
-         resources.add(AuthenticationFilter.class);
+        //resources.add(AuthenticationFilter.class);
         return resources;
     }
 

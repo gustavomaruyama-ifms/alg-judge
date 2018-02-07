@@ -74,7 +74,7 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
     }
 
     public List<CasoDeTeste> buscarCasoDeTestePorIdProblema(Long idProblema) {
-        Query query = super.createQuery("from CasoDeTeste as c join fetch c.problema p where c.problema.id = :id");
+        Query query = super.createQuery("select c from CasoDeTeste c where c.ativo is true and c.problema.id = :id");
         query.setParameter("id", idProblema);
         return query.list();
     }

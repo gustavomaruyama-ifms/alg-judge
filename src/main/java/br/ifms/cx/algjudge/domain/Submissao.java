@@ -6,6 +6,7 @@
 package br.ifms.cx.algjudge.domain;
 
 import java.lang.reflect.Field;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,14 +41,15 @@ public class Submissao {
     private Long id;
     @Column(length = 50000)
     private String codigoFonte;
-    @Temporal(TemporalType.DATE)
-    private Date dataEnvio;
+    private Long dataEnvio;
     private Boolean ativo = true;
     private Long tempoExecucao;
     @Enumerated(EnumType.STRING)
     private SituacaoSubmissaoEnum situacao;
     @ManyToOne( fetch = FetchType.LAZY)
     private Problema problema;
+    @ManyToOne( fetch = FetchType.LAZY)
+    private Usuario usuario;
 
     public Submissao() {
         this.ativo = true;
@@ -96,11 +98,11 @@ public class Submissao {
         this.codigoFonte = codigoFonte;
     }
 
-    public Date getDataEnvio() {
+    public Long getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(Date dataEnvio) {
+    public void setDataEnvio(Long dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 
@@ -127,6 +129,12 @@ public class Submissao {
     public void setProblema(Problema problema) {
         this.problema = problema;
     }
-    
-    
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

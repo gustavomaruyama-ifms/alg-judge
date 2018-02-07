@@ -17,7 +17,13 @@ import br.ifms.cx.algjudge.domain.SituacaoSubmissaoEnum;
 import br.ifms.cx.algjudge.domain.Submissao;
 import br.ifms.cx.algjudge.domain.TerminalCasoDeTeste;
 import br.ifms.cx.algjudge.domain.Usuario;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,17 +42,16 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Gustavo
  */
 @Path("/submissao")
-@RolesAllowed({Usuario.PAPEL_ALUNO,Usuario.PAPEL_PROFESSOR})
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Component
 public class SubmissaoResource {
-
+   
     @Autowired
     private ProblemaDAO problemaDAO;
     @Autowired
     private SubmissaoDAO submissaoDAO;
-
+  
     public SubmissaoResource() {
 
     }
@@ -54,23 +59,36 @@ public class SubmissaoResource {
     @POST
     @Transactional
     public Response submeter(Submissao submissao) {
-
+       
         try {
+            Integer flag = 0;
             submissaoDAO.salvarSubmissao(submissao);
             List<CasoDeTeste> casosDeTeste = problemaDAO.buscarCasoDeTestePorIdProblema(submissao.getProblema().getId());
             Interpretador interpretador;
             TerminalCasoDeTeste terminalCasoDeTeste;
             String saida;
-
+            
             for (CasoDeTeste caso : casosDeTeste) {
                 terminalCasoDeTeste = new TerminalCasoDeTeste(caso);
                 interpretador = new Interpretador(terminalCasoDeTeste);
                 interpretador.adicionarEscutaDeExecutor(new EscutaDeExecutorSubmissao(caso, submissaoDAO, terminalCasoDeTeste, submissao));
                 interpretador.analisar(submissao.getCodigoFonte());
                 interpretador.executar();
+                saida = terminalCasoDeTeste.getSaida();
+                if (saida.equalsIgnoreCase(caso.getSaida())) {
+                  flag ++;  
+                }
             }
             
-            return Response.Ok("Submissao incluida com sucesso");
+            if (flag == casosDeTeste.size()) {
+                  submissao.setSituacao(SituacaoSubmissaoEnum.ACEITO);
+                  submissaoDAO.update(submissao);
+                  return Response.Ok(submissao.getSituacao().toString());
+                } else {
+                  submissao.setSituacao(SituacaoSubmissaoEnum.RESPOSTA_ERRADA);
+                  submissaoDAO.update(submissao);
+                  return Response.Ok(submissao.getSituacao().toString());
+                }
         } catch (IOException ex) {
             return Response.Error(ex.getMessage());
         } catch (Exception ex) {

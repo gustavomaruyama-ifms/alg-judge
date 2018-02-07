@@ -32,17 +32,17 @@ public class MainTeste {
 
 			@Override
 			public void informacao(String mensagemDeInformacao) {
-				System.out.println(mensagemDeInformacao);
+				System.out.println("Informação" + mensagemDeInformacao);
 			}
 
 			@Override
 			protected void escrever(String mensagem) {
-				System.out.println(mensagem);
+				System.out.println("escrever mensagem"+ mensagem);
 			}
 
 			@Override
 			public void erro(String mensagemDeErro) {
-				System.out.println(mensagemDeErro);
+				System.out.println("Erro" + mensagemDeErro);
 			}
 		});
 
