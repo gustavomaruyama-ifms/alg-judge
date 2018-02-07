@@ -8,6 +8,7 @@ import br.ifms.cx.algjudge.domain.Usuario;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
@@ -43,7 +44,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     private UsuarioDAO usuarioDAO;
 
     private static final String AUTHORIZATION_PROPERTY = "Authorization";
-    private static final String AUTHENTICATION_BASIC_SCHEME = "Basic";
     private static final String AUTHENTICATION_JWT_SCHEME = "Bearer";
 
     @Override
@@ -63,6 +63,10 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             return;
         }
 
+        if (metodo.getName().equals("login") || metodo.getName().equals("signup")) {
+            return;
+        }
+
         //Get request headers
         MultivaluedMap<String, String> headers = requestContext.getHeaders();
 
@@ -75,9 +79,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             return;
         }
 
-        if (authorization.get(0).contains(AUTHENTICATION_BASIC_SCHEME)) {
-            autenticacaoBasica(requestContext, classe, metodo);
-        } else if (authorization.get(0).contains(AUTHENTICATION_JWT_SCHEME)) {
+        if (authorization.get(0).contains(AUTHENTICATION_JWT_SCHEME)) {
             autenticacaoJWT(requestContext, classe, metodo);
         } else {
             negarAcesso(requestContext);
@@ -88,63 +90,6 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
     private void negarAcesso(ContainerRequestContext requestContext) {
         requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
                 .entity("Você não tem permissão para acessar este serviço.").build());
-    }
-
-    private void autenticacaoBasica(ContainerRequestContext requestContext, Class classe, Method metodo) {
-        //Get request headers
-        MultivaluedMap<String, String> headers = requestContext.getHeaders();
-
-        //Fetch authorization header
-        final List<String> authorization = headers.get(AUTHORIZATION_PROPERTY);
-
-        //If no authorization information present; block access
-        if (authorization == null || authorization.isEmpty()) {
-            negarAcesso(requestContext);
-            return;
-        }
-
-        String encodedEmailSenha = authorization.get(0).replaceFirst(AUTHENTICATION_BASIC_SCHEME + " ", "");
-
-        //Decode username and password
-        String emailESenha = new String(Base64.decode(encodedEmailSenha.getBytes()));
-
-        //Split username and password tokens
-        final StringTokenizer tokenizer = new StringTokenizer(emailESenha, ":");
-        final String email = tokenizer.nextToken();
-        final String senha = tokenizer.nextToken();
-
-        // Busca usuario pelo email no banco de dados
-        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
-
-        // Se o usuario veio null
-        if (usuario == null) {
-            negarAcesso(requestContext);
-            return;
-        }
-
-        if (!senha.equals(usuario.getSenha())) {
-            negarAcesso(requestContext);
-            return;
-        }
-
-        try {
-            Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
-            String token = JWT.create()
-                    .withIssuer(usuario.getEmail()+" "+usuario.getPapel())
-                    .sign(algorithm);
-
-            JWTVerifier verifier = JWT.require(algorithm)
-                    
-                    .build();
-            DecodedJWT jwt = verifier.verify(token);
-            requestContext.abortWith(Response.status(Response.Status.OK)
-                .entity(token).build());
-           
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void autenticacaoJWT(ContainerRequestContext requestContext, Class classe, Method metodo) {
@@ -165,30 +110,11 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
-           
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
             Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
+        } catch(JWTVerificationException ex){
+            negarAcesso(requestContext);
+            return;
         }
-    }
-
-    private boolean isUserAllowed(final String email, final String password, final Set<String> rolesSet) {
-        // Busca usuario pelo email no banco de dados
-        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
-
-        // Se o usuario veio null
-        if (usuario == null) {
-            return false;
-        }
-
-        if (!usuario.getSenha().equals(password)) {
-            return false;
-        }
-
-        if (!rolesSet.contains(usuario.getPapel())) {
-            return false;
-        }
-        return true;
     }
 }

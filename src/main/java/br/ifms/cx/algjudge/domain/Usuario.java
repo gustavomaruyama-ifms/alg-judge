@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -32,7 +34,9 @@ public class Usuario {
     private Long id;
     private String nome;
     @Column(unique = true)
+    @NotBlank
     private String email;
+    @Length(min = 6)
     private String senha;
     @Column(nullable = false)
     private String papel;

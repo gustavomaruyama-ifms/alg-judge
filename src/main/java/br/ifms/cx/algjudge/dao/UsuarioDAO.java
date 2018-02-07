@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
  * @author Gustavo
  */
 @Component
-public class UsuarioDAO extends HibernateDAO<Problema> {
+public class UsuarioDAO extends HibernateDAO<Usuario> {
 
     public UsuarioDAO() {
-        super(Problema.class);
+        super(Usuario.class);
     }
 
     /**
@@ -21,6 +21,11 @@ public class UsuarioDAO extends HibernateDAO<Problema> {
      * @param id
      * @return 
      */
+    
+    public void inserirUsuario(Usuario usuario){
+        
+    }
+    
     public Usuario buscarUsuarioPorEmail(String email) {
         Query query = super.createQuery("FROM Usuario u WHERE u.email LIKE :email");
         query.setParameter("email", email);
