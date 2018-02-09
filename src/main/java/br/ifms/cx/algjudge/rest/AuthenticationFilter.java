@@ -42,6 +42,10 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
+        if(requestContext.getRequest().getMethod().equals("OPTIONS")){
+            return;
+        }
+        
         Method metodo = resourceInfo.getResourceMethod();
         Class classe = metodo.getDeclaringClass();
 
@@ -56,6 +60,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             negarAcesso(requestContext);
             return;
         }
+        
         String path = requestContext.getUriInfo().getPath();
         if (path.equals("usuario/login") || path.equals("usuario/signup")) {
             return;
@@ -102,12 +107,16 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
         String token = authorization.get(0).replaceFirst(AUTHENTICATION_JWT_SCHEME + " ", "");
         try {
             Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
+            
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
-            String papel = jwt.getClaim("papel").asString();
-            Set<String> rolesSet;
-            RolesAllowed rolesAnnotation;
             
+            String papel = jwt.getClaim("papel").asString();
+            String email = jwt.getClaim("email").asString();
+            String id = jwt.getClaim("id").asString();
+            
+            Set<String> rolesSet;
+            RolesAllowed rolesAnnotation; 
             if (metodo.isAnnotationPresent(RolesAllowed.class)) {
                 rolesAnnotation = metodo.getAnnotation(RolesAllowed.class);
                 rolesSet = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
