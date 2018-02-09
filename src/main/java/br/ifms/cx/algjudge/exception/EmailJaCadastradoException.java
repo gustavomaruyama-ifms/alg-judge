@@ -9,9 +9,11 @@ package br.ifms.cx.algjudge.exception;
  *
  * @author Gustavo
  */
-public class SenhaInvalidaException extends Exception{
-     @Override
+public class EmailJaCadastradoException extends Exception{
+
+    @Override
     public String getMessage() {
-        return "Senha inválida."; //To change body of generated methods, choose Tools | Templates.
+        return "E-mail já cadastrado."; //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

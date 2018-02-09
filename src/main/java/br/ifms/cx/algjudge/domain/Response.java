@@ -5,30 +5,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Response {
 	private String status;
-	private String msg;
+	private Object msg;
 
 	public Response() {
 	}
 
-	public static Response Ok(String string) {
+	public static Response Ok(Object obj) {
 		Response r = new Response();
 		r.setStatus("OK");
-		r.setMsg(string);
+		r.setMsg(obj);
 		return r;
 	}
 
-	public static Response Error(String string) {
+	public static Response Error(Object obj) {
 		Response r = new Response();
 		r.setStatus("ERROR");
-		r.setMsg(string);
+		r.setMsg(obj);
 		return r;
 	}
 
-	public String getMsg() {
+	public Object getMsg() {
 		return msg;
 	}
 
-	public void setMsg(String msg) {
+	public void setMsg(Object msg) {
 		this.msg = msg;
 	}
 

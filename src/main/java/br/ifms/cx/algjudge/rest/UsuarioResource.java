@@ -1,8 +1,9 @@
 package br.ifms.cx.algjudge.rest;
 
+import javax.ws.rs.core.Response;
 import br.ifms.cx.algjudge.dao.UsuarioDAO;
-import br.ifms.cx.algjudge.domain.Response;
 import br.ifms.cx.algjudge.domain.Usuario;
+import br.ifms.cx.algjudge.exception.EmailJaCadastradoException;
 import br.ifms.cx.algjudge.exception.SenhaInvalidaException;
 import br.ifms.cx.algjudge.exception.UsuarioInexistenteException;
 import com.auth0.jwt.JWT;
@@ -27,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Rodrigo
  */
-
 @Path("/usuario")
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -47,17 +47,17 @@ public class UsuarioResource {
     public Response signup(Usuario usuario) {
         try {
             if (db.buscarUsuarioPorEmail(usuario.getEmail()) != null) {
-                return Response.Error("Usuário já existe");
+                throw new EmailJaCadastradoException();
             }
 
             if (null == usuario.getSenha() || usuario.getSenha().length() < 6) {
-                return Response.Error("Senha inválida");
+                throw new SenhaInvalidaException();
             }
             usuario.setPapel(Usuario.PAPEL_ALUNO);
             db.save(usuario);
-            return Response.Ok("Usuario incluido com sucesso");
+            return Response.status(200).entity("Usuário incluido com sucesso").build();
         } catch (Exception ex) {
-            return Response.Error(ex.getMessage());
+            return Response.status(404).entity(ex.getMessage()).build();
         }
     }
 
@@ -70,7 +70,7 @@ public class UsuarioResource {
         //Split username and password tokens
         String splited[] = emailESenha.split(":");
         try {
-            
+
             if (splited.length < 2) {
                 throw new UsuarioInexistenteException();
             }
@@ -95,70 +95,32 @@ public class UsuarioResource {
                     .withClaim("papel", usuario.getPapel())
                     .withClaim("id", usuario.getId())
                     .sign(algorithm);
-            return Response.Ok(token);
+
+            usuario.setSenha(null);
+            usuario.setToken(token);
+            return Response.status(200).entity(usuario).build();
         } catch (UsuarioInexistenteException ex) {
-            return Response.Error("Usuário inválido");
+            return Response.status(404).entity(ex.getMessage()).build();
         } catch (SenhaInvalidaException ex) {
-            return Response.Error("Senha inválida");
+            return Response.status(404).entity(ex.getMessage()).build();
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
-            return Response.Error("");
+            return Response.status(404).entity(ex.getMessage()).build();
         }
     }
-    
+
     @GET
     @Path("/{id}")
-    public Usuario getUsuario  (@PathParam("id") Integer id) {
+    public Usuario getUsuario(@PathParam("id") Integer id) {
         return db.get(id);
     }
 
     @GET
     @Path("/list/{papel}/{pag}/{qtd}")
-    public List <Usuario> getUsuarios  
-        (
-            @PathParam("papel") String papel , 
-            @PathParam("pag") Integer pag, 
+    public List<Usuario> getUsuarios(
+            @PathParam("papel") String papel,
+            @PathParam("pag") Integer pag,
             @PathParam("qtd") Integer id
-        ) 
-    {
-        return db.listar(papel);  
-    }
-    
-    @POST
-    @Path("/admin")
-    @Transactional
-    public Response inserirAdmin (Usuario u) {
-        try {
-        db.inserirAdmin(u);
-          return Response.Ok("Usuatio Incerido com sucesso");
-        } catch (Exception e) {
-          System.out.println("Falhou");
-            return Response.Error(e.getMessage()); 
-        }
-    }
-   
-    @POST
-    @Path("/professor")
-    @Transactional
-    public Response inserirProfessor (Usuario u) {
-        try {
-        db.inserirProfessor(u);
-          return Response.Ok("Usuatio Incerido com sucesso");
-        } catch (Exception e) {
-          System.out.println("Falhou");
-            return Response.Error(e.getMessage()); 
-        }
-    }
-    
-    @POST
-    @Path("/aluno")
-    @Transactional
-    public Response inserirAluno (Usuario u) {
-        try {
-        db.inserirAluno(u);
-          return Response.Ok("Usuatio Incerido com sucesso");
-        } catch (Exception e) {
-          System.out.println("Falhou");
-          return Response.Error(e.getMessage()); 
-        }
+    ) {
+        return db.listar(papel);
     }
 }

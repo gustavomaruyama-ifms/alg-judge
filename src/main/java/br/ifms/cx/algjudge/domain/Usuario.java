@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -43,6 +44,8 @@ public class Usuario implements Serializable {
     private String papel;
     @Column(nullable = false)
     private Boolean ativo;
+    @Transient
+    private String token;
 
     public Usuario() {
         this.ativo = Boolean.TRUE;
@@ -112,5 +115,13 @@ public class Usuario implements Serializable {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+     
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
