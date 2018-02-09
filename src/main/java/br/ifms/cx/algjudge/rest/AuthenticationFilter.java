@@ -56,8 +56,8 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             negarAcesso(requestContext);
             return;
         }
-
-        if (metodo.getName().equals("login") || metodo.getName().equals("signup")) {
+        String path = requestContext.getUriInfo().getPath();
+        if (path.equals("usuario/login") || path.equals("usuario/signup")) {
             return;
         }
 
