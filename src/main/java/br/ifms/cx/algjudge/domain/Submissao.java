@@ -43,6 +43,8 @@ public class Submissao implements Serializable {
     private Problema problema;
     @Column(nullable = false)
     private Boolean ativo;
+    @ManyToOne
+    private Usuario usuario;
     
     public Submissao() {
         this.ativo = Boolean.TRUE;
@@ -120,5 +122,13 @@ public class Submissao implements Serializable {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

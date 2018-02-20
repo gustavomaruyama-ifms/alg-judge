@@ -5,7 +5,6 @@ import br.ifms.cx.algjudge.domain.Problema;
 import br.ifms.cx.algjudge.domain.Response;
 import br.ifms.cx.algjudge.domain.Usuario;
 import java.util.List;
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
 import javax.ws.rs.Consumes;
@@ -48,7 +47,7 @@ public class ProblemaResource {
 
     @GET
     @Path("/list/{qtde}")
-    @RolesAllowed({Usuario.PAPEL_ALUNO})
+    @RolesAllowed({Usuario.PAPEL_ALUNO, Usuario.PAPEL_ADMINISTRADOR, Usuario.PAPEL_PROFESSOR})
     public List<Problema> listarProblemas(@PathParam("qtde") Integer qtde) {
         return db.listarProblemas(qtde);
     }
