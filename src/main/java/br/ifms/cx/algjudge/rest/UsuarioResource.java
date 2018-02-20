@@ -119,8 +119,7 @@ public class UsuarioResource {
     public List<Usuario> getUsuarios(
             @PathParam("papel") String papel,
             @PathParam("pag") Integer pag,
-            @PathParam("qtd") Integer id
-    ) {
+            @PathParam("qtd") Integer id) {
         return db.listar(papel);
     }
 }

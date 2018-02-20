@@ -126,7 +126,9 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 rolesSet = new HashSet<>(Arrays.asList(rolesAnnotation.value()));
                 verificarPapel(papel, rolesSet, requestContext);
             }
-
+            headers.add("email", email);
+            headers.add("id", id);
+            headers.add("papel", papel); 
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
             Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JWTVerificationException ex) {

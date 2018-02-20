@@ -10,6 +10,7 @@ import br.com.vinyanalista.portugol.interpretador.execucao.ErroEmTempoDeExecucao
 import br.com.vinyanalista.portugol.interpretador.execucao.EscutaDeExecutor;
 import br.ifms.cx.algjudge.dao.ProblemaDAO;
 import br.ifms.cx.algjudge.dao.SubmissaoDAO;
+import br.ifms.cx.algjudge.dao.UsuarioDAO;
 import br.ifms.cx.algjudge.domain.CasoDeTeste;
 import br.ifms.cx.algjudge.domain.EscutaDeExecutorSubmissao;
 import br.ifms.cx.algjudge.domain.Response;
@@ -20,6 +21,7 @@ import br.ifms.cx.algjudge.domain.TerminalCasoDeTeste;
 import java.io.IOException;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Gustavo
  */
 @Path("/submissao")
-@RolesAllowed({Usuario.PAPEL_ALUNO,Usuario.PAPEL_PROFESSOR})
+@RolesAllowed({Usuario.PAPEL_ALUNO, Usuario.PAPEL_PROFESSOR})
 @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
 @Component
@@ -43,6 +45,8 @@ public class SubmissaoResource {
     private ProblemaDAO problemaDAO;
     @Autowired
     private SubmissaoDAO submissaoDAO;
+    @Autowired
+    private UsuarioDAO usuarioDAO;
 
     public SubmissaoResource() {
 
@@ -50,9 +54,11 @@ public class SubmissaoResource {
 
     @POST
     @Transactional
-    public Response submeter(Submissao submissao) {
+    public Response submeter(Submissao submissao, @HeaderParam("email") String email) {
 
         try {
+            Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
+            submissao.setUsuario(usuario);
             submissaoDAO.salvarSubmissao(submissao);
             List<CasoDeTeste> casosDeTeste = problemaDAO.buscarCasoDeTestePorIdProblema(submissao.getProblema().getId());
             Interpretador interpretador;
@@ -66,7 +72,7 @@ public class SubmissaoResource {
                 interpretador.analisar(submissao.getCodigoFonte());
                 interpretador.executar();
             }
-            
+
             return Response.Ok("Submissao incluida com sucesso");
         } catch (IOException ex) {
             return Response.Error(ex.getMessage());
