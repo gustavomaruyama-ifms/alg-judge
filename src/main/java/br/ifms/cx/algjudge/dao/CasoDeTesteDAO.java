@@ -37,8 +37,8 @@ public class CasoDeTesteDAO extends HibernateDAO<CasoDeTeste>{
      * @param c
      * @param id 
      */
-    public void updateCasoDeTeste (CasoDeTeste c, Integer id) {
-        caso = get(id);
+    public void updateCasoDeTeste (CasoDeTeste c) {
+        caso = get(c.getId());
         
         caso.setEntrada(c.getEntrada());
         caso.setExemplo(c.getExemplo());
@@ -51,9 +51,9 @@ public class CasoDeTesteDAO extends HibernateDAO<CasoDeTeste>{
      * delatar um caso de teste
      * @param id 
      */
-    public void deleteCasoDeTeste (Integer id) {
-        caso = get(id);
-        caso.setDelete(true);
+    public void deleteCasoDeTeste (CasoDeTeste c) {
+        caso = get(c.getId());
+        caso.setAtivo(false);
         super.update(caso);
     }
     
@@ -69,8 +69,9 @@ public class CasoDeTesteDAO extends HibernateDAO<CasoDeTeste>{
      * listar casos de teste
      * @return 
      */
-    public List<CasoDeTeste> listarCasoDeTeste () {
-       Query query  = super.createQuery("FROM CasoDeTeste c WHERE  c.ativo = true");
-       return query.list();
+    public List<CasoDeTeste> listarCasoDeTeste (Long id) {
+        Query query = super.createQuery("select c from CasoDeTeste c where c.ativo is true and c.problema.id = :id");
+        query.setParameter("id", id);
+        return query.list();
     }
 }
