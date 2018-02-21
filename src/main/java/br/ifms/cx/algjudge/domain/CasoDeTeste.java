@@ -30,7 +30,7 @@ public class CasoDeTeste {
     private Boolean exemplo;
     private String entrada;
     @Column(nullable = false)
-    private Boolean delete;
+    private Boolean ativo;
     private String saida;
     @ManyToOne(fetch = FetchType.LAZY)
     private Problema problema;
@@ -42,7 +42,7 @@ public class CasoDeTeste {
     private Boolean deferido;
 
     public CasoDeTeste() {
-        this.delete = false;
+        this.ativo = Boolean.TRUE;
         this.executado = Boolean.FALSE;
     }
 
@@ -78,14 +78,14 @@ public class CasoDeTeste {
         this.saida = saida;
     }
 
-    public Boolean getDelete() {
-        return delete;
+    public Boolean getAtivo() {
+        return ativo;
     }
 
-    public void setDelete(Boolean delete) {
-        this.delete = delete;
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
-
+  
     public Problema getProblema() {
         return problema;
     }
@@ -101,8 +101,7 @@ public class CasoDeTeste {
     public void setExecutado(Boolean executado) {
         this.executado = executado;
     }
-    
-    
+
     public String getTempoDeExecucao() {
         return tempoDeExecucao;
     }
