@@ -27,6 +27,7 @@ public class Submissao implements Serializable {
     public static final String SITUACAO_ACEITO = "Aceito";
     public static final String SITUACAO_RESPOSTA_ERRADA = "Resposta Errada";
     public static final String SITUACAO_ERRO_DE_SINTAX = "Erro de Sintax";
+    public static final String SITUACAO_ERRO_DESCONHECIDO = "Erro Desconhecido";
 
     @Id
     @SequenceGenerator(sequenceName = "seq_submissao", name = "gen_seq_submissao", allocationSize = 1, initialValue = 1)

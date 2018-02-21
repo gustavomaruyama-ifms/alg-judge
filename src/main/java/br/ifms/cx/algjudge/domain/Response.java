@@ -4,39 +4,66 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Response {
-	private String status;
-	private Object msg;
 
-	public Response() {
-	}
+    private String status;
+    private String msg;
+    private Object data;
 
-	public static Response Ok(Object obj) {
-		Response r = new Response();
-		r.setStatus("OK");
-		r.setMsg(obj);
-		return r;
-	}
+    public Response() {
+    }
 
-	public static Response Error(Object obj) {
-		Response r = new Response();
-		r.setStatus("ERROR");
-		r.setMsg(obj);
-		return r;
-	}
+    public static Response Ok(Object obj) {
+        Response r = new Response();
+        r.setStatus("OK");
+        r.setData(obj);
+        r.setMsg("EMPTY");
+        return r;
+    }
 
-	public Object getMsg() {
-		return msg;
-	}
+    public static Response Ok(String msg) {
+        Response r = new Response();
+        r.setStatus("OK");
+        r.setData("EMPTY");
+        r.setMsg(msg);
+        return r;
+    }
 
-	public void setMsg(Object msg) {
-		this.msg = msg;
-	}
+    public static Response Ok(String msg, Object obj) {
+        Response r = new Response();
+        r.setStatus("OK");
+        r.setMsg(msg);
+        r.setData(obj);
+        return r;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public static Response Error(String msg) {
+        Response r = new Response();
+        r.setStatus("ERROR");
+        r.setMsg(msg);
+        return r;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 }

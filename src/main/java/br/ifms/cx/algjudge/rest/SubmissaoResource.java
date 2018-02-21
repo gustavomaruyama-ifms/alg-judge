@@ -5,20 +5,16 @@
  */
 package br.ifms.cx.algjudge.rest;
 
-import br.com.vinyanalista.portugol.interpretador.Interpretador;
-import br.com.vinyanalista.portugol.interpretador.execucao.ErroEmTempoDeExecucao;
-import br.com.vinyanalista.portugol.interpretador.execucao.EscutaDeExecutor;
 import br.ifms.cx.algjudge.dao.ProblemaDAO;
 import br.ifms.cx.algjudge.dao.SubmissaoDAO;
 import br.ifms.cx.algjudge.dao.UsuarioDAO;
 import br.ifms.cx.algjudge.domain.CasoDeTeste;
-import br.ifms.cx.algjudge.domain.EscutaDeExecutorSubmissao;
+import br.ifms.cx.algjudge.domain.Juiz;
 import br.ifms.cx.algjudge.domain.Response;
 import br.ifms.cx.algjudge.domain.Submissao;
 import br.ifms.cx.algjudge.domain.Usuario;
 import javax.annotation.security.RolesAllowed;
-import br.ifms.cx.algjudge.domain.TerminalCasoDeTeste;
-import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.HeaderParam;
@@ -55,31 +51,18 @@ public class SubmissaoResource {
     @POST
     @Transactional
     public Response submeter(Submissao submissao, @HeaderParam("email") String email) {
+        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
+        
+        submissao.setUsuario(usuario);
+        submissao.setDataEnvio(new Date());
+        submissao.setSituacao(Submissao.SITUACAO_EM_EXECUCAO);
+        submissaoDAO.salvarSubmissao(submissao);
+        List<CasoDeTeste> casosDeTeste = problemaDAO.buscarCasoDeTestePorIdProblema(submissao.getProblema().getId());
+  
+        Juiz juiz = new Juiz();
+        juiz.jugar(submissao, casosDeTeste);
+        submissaoDAO.saveOrUpdate(submissao);
 
-        try {
-            Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
-            submissao.setUsuario(usuario);
-            submissaoDAO.salvarSubmissao(submissao);
-            List<CasoDeTeste> casosDeTeste = problemaDAO.buscarCasoDeTestePorIdProblema(submissao.getProblema().getId());
-            Interpretador interpretador;
-            TerminalCasoDeTeste terminalCasoDeTeste;
-            String saida;
-
-            for (CasoDeTeste caso : casosDeTeste) {
-                terminalCasoDeTeste = new TerminalCasoDeTeste(caso);
-                interpretador = new Interpretador(terminalCasoDeTeste);
-                interpretador.adicionarEscutaDeExecutor(new EscutaDeExecutorSubmissao(caso, submissaoDAO, terminalCasoDeTeste, submissao));
-                interpretador.analisar(submissao.getCodigoFonte());
-                interpretador.executar();
-            }
-
-            return Response.Ok("Submissao incluida com sucesso");
-        } catch (IOException ex) {
-            return Response.Error(ex.getMessage());
-        } catch (Exception ex) {
-            submissao.setSituacao(Submissao.SITUACAO_ERRO_DE_SINTAX);
-            submissaoDAO.update(submissao);
-            return Response.Error(ex.getMessage());
-        }
+        return Response.Ok(submissao.getSituacao());
     }
 }

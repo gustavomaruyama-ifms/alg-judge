@@ -42,7 +42,7 @@ public class TerminalCasoDeTeste extends Terminal {
 
     @Override
     public void informacao(String string) {
-        System.out.println("Informação");
+        System.out.println(string);
     }
 
     @Override

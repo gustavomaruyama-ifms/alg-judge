@@ -16,23 +16,22 @@ import br.ifms.cx.algjudge.dao.SubmissaoDAO;
 public class EscutaDeExecutorSubmissao implements EscutaDeExecutor {
     private TerminalCasoDeTeste terminal;
     private String saida;
-    private SubmissaoDAO dao;
     private CasoDeTeste casoDeTeste;
-    private Submissao submissao;
     
-    public EscutaDeExecutorSubmissao(CasoDeTeste casoDeTeste, SubmissaoDAO dao, TerminalCasoDeTeste terminal, Submissao submissao) {
+    public EscutaDeExecutorSubmissao(CasoDeTeste casoDeTeste, TerminalCasoDeTeste terminal) {
         this.casoDeTeste = casoDeTeste;
         this.terminal = terminal;
-        this.dao = dao;
-        this.submissao = submissao;
     }
     
     @Override
     public void aoEncerrarExecucao(ErroEmTempoDeExecucao eetde) {
         saida = terminal.getSaida();
-        if (!saida.equals(casoDeTeste.getSaida())) {
-            submissao.setSituacao(Submissao.SITUACAO_RESPOSTA_ERRADA);
-            dao.saveOrUpdate(submissao);
+        casoDeTeste.setExecutado(Boolean.TRUE);
+        
+        if (saida.equals(casoDeTeste.getSaida())) {
+            casoDeTeste.setDeferido(Boolean.TRUE);
+        }else{
+            casoDeTeste.setDeferido(Boolean.FALSE);
         }
     }
 }

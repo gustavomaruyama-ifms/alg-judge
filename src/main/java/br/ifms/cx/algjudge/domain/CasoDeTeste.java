@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 /**
  *
@@ -20,6 +21,7 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 public class CasoDeTeste {
+
     @Id
     @SequenceGenerator(sequenceName = "seq_caso_de_teste", name = "gen_seq_caso_de_teste",
             allocationSize = 1, initialValue = 1)
@@ -30,11 +32,18 @@ public class CasoDeTeste {
     @Column(nullable = false)
     private Boolean delete;
     private String saida;
-     @ManyToOne( fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Problema problema;
+    @Transient
+    private Boolean executado;
+    @Transient
+    private String tempoDeExecucao;
+    @Transient
+    private Boolean deferido;
 
     public CasoDeTeste() {
         this.delete = false;
+        this.executado = Boolean.FALSE;
     }
 
     public Long getId() {
@@ -75,7 +84,7 @@ public class CasoDeTeste {
 
     public void setDelete(Boolean delete) {
         this.delete = delete;
-    }  
+    }
 
     public Problema getProblema() {
         return problema;
@@ -84,4 +93,30 @@ public class CasoDeTeste {
     public void setProblema(Problema problema) {
         this.problema = problema;
     }
+
+    public Boolean getExecutado() {
+        return executado;
+    }
+
+    public void setExecutado(Boolean executado) {
+        this.executado = executado;
+    }
+    
+    
+    public String getTempoDeExecucao() {
+        return tempoDeExecucao;
+    }
+
+    public void setTempoDeExecucao(String tempoDeExecucao) {
+        this.tempoDeExecucao = tempoDeExecucao;
+    }
+
+    public Boolean getDeferido() {
+        return deferido;
+    }
+
+    public void setDeferido(Boolean deferido) {
+        this.deferido = deferido;
+    }
+
 }
