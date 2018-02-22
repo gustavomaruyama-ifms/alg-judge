@@ -36,6 +36,29 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
     public void persistirProblema(Problema p) {
         super.save(p);
     }
+    
+    /**
+     * Metodo para deletar um problema no banco de 
+     * dados op delete é feito da forma l[ógica
+     *
+     * @param p
+     */
+    public void deleteProblema(Long id) {
+        Problema problema = new Problema();
+        problema = super.get(id);
+        problema.setAtivo(false);
+        super.update(problema);
+    }
+
+    /**
+     * Metodo para deletar um problema no banco de dados
+     *
+     * @param p
+     */
+    public void updateProblema(Problema p) {
+        super.update(p);
+    }
+        
 
     /**
      * Metodo que retorna uma lista de problema. É necessário passar um numero
@@ -46,12 +69,12 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
      */
     @SuppressWarnings("unchecked")
     public List<Problema> listarProblemas(Integer qtde) {
-        Query query = super.createQuery("from Problema as p where p.ativo = true");
+        Query query = super.createQuery("select p from Problema p where p.ativo is true");
         return query.list();
     }
 
     public List<CasoDeTeste> buscarCasoDeTestePorIdProblema(Long idProblema) {
-        Query query = super.createQuery("from CasoDeTeste as c join fetch c.problema p where c.problema.id = :id and p.ativo = true");
+        Query query = super.createQuery("select c from CasoDeTeste c where c.ativo is true and c.problema.id = :id");
         query.setParameter("id", idProblema);
         return query.list();
     }
