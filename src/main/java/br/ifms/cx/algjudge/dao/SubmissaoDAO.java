@@ -69,7 +69,7 @@ public class SubmissaoDAO extends HibernateDAO<Submissao> {
      */
     public List<Submissao> listarSubmissoesPorIdUsuario(Long id, int page) {
         page--;
-        Query query = super.createQuery("SELECT new Submissao(s.id, s.codigoFonte, s.dataEnvio, s.tempoExecucao, s.situacao, s.problema.id, s.problema.titulo)FROM Submissao s WHERE s.usuario.id = :id AND s.ativo = true");
+        Query query = super.createQuery("SELECT new Submissao(s.id, s.codigoFonte, s.dataEnvio, s.tempoExecucao, s.situacao, s.problema.id, s.problema.titulo)FROM Submissao s WHERE s.usuario.id = :id AND s.ativo = true ORDER BY s.id DESC");
         query.setParameter("id", id);
         query.setFirstResult(page * 10);
         query.setMaxResults(10);
