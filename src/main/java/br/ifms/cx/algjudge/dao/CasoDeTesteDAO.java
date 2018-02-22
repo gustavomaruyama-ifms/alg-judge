@@ -70,7 +70,7 @@ public class CasoDeTesteDAO extends HibernateDAO<CasoDeTeste>{
      * @return 
      */
     public List<CasoDeTeste> listarCasoDeTeste (Long id) {
-        Query query = super.createQuery("select c from CasoDeTeste c where c.ativo is true and c.problema.id = :id");
+        Query query = super.createQuery("Select new CasoDeTeste(c.id,c.exemplo,c.entrada,c.saida) from CasoDeTeste c where c.ativo = true and c.problema.id = :id");
         query.setParameter("id", id);
         return query.list();
     }

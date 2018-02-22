@@ -93,7 +93,7 @@ public class UsuarioResource {
             String token = JWT.create()
                     .withClaim("email", usuario.getEmail())
                     .withClaim("papel", usuario.getPapel())
-                    .withClaim("id", usuario.getId())
+                    .withClaim("idUsuario", usuario.getId().toString())
                     .sign(algorithm);
 
             usuario.setSenha(null);

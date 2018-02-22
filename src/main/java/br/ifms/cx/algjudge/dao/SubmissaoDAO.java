@@ -15,55 +15,64 @@ import org.springframework.stereotype.Component;
  * @author Rodrigo
  */
 @Component
-public class SubmissaoDAO extends HibernateDAO<Submissao>{
+public class SubmissaoDAO extends HibernateDAO<Submissao> {
+
     private Submissao submissao;
-    
+
     public SubmissaoDAO() {
         super(Submissao.class);
     }
-   
+
     /**
      * salvar uma submissÃ£o
-     * @param s 
+     *
+     * @param s
      */
-    public void salvarSubmissao (Submissao s) {
+    public void salvarSubmissao(Submissao s) {
         super.save(s);
     }
-    
+
     /**
      * update uma submissÃ£o
+     *
      * @param s
-     * @param id 
+     * @param id
      */
-    public void updateSubmissao (Submissao s, Integer id) {
-      submissao = super.get(id);
-      
-      submissao.setCodigoFonte(s.getCodigoFonte());
-      submissao.setDataEnvio(s.getDataEnvio());
-      submissao.setSituacao(s.getSituacao());
-      submissao.setTempoExecucao(s.getTempoExecucao());
-      
-      super.update(submissao);
+    public void updateSubmissao(Submissao s, Integer id) {
+        submissao = super.get(id);
+
+        submissao.setCodigoFonte(s.getCodigoFonte());
+        submissao.setDataEnvio(s.getDataEnvio());
+        submissao.setSituacao(s.getSituacao());
+        submissao.setTempoExecucao(s.getTempoExecucao());
+
+        super.update(submissao);
     }
-    
+
     /**
      * delete uma submissÃ£o
+     *
      * @param s
-     * @param id 
+     * @param id
      */
-    public void deleteSubmissao (Integer id) {
-      submissao = super.get(id);
-      submissao.setAtivo(Boolean.FALSE);
-      super.update(submissao);
+    public void deleteSubmissao(Integer id) {
+        submissao = super.get(id);
+        submissao.setAtivo(Boolean.FALSE);
+        super.update(submissao);
     }
-    
+
     /**
-     * lista de submissÃµes
+     * lista de submissoes
+     *
      * @param s
-     * @param id 
+     * @param id
      */
-    public List <Submissao> listSubmissao () {
-      Query query = super.createQuery("FROM Submissao s WHERE s.ativo = true");
-      return query.list();
+    public List<Submissao> listarSubmissoesPorIdUsuario(Long id, int page) {
+        page--;
+        Query query = super.createQuery("SELECT new Submissao(s.id, s.codigoFonte, s.dataEnvio, s.tempoExecucao, s.situacao, s.problema.id, s.problema.titulo)FROM Submissao s WHERE s.usuario.id = :id AND s.ativo = true");
+        query.setParameter("id", id);
+        query.setFirstResult(page * 10);
+        query.setMaxResults(10);
+        return query.list();
     }
 }

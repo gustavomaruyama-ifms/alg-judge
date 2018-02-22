@@ -51,6 +51,19 @@ public class Submissao implements Serializable {
         this.ativo = Boolean.TRUE;
     }
 
+    public Submissao(Long id, String codigoFonte, Date dataEnvio, Long tempoExecucao, String situacao, Long idProblema, String tituloProblema) {
+        this.id = id;
+        this.codigoFonte = codigoFonte;
+        this.dataEnvio = dataEnvio;
+        this.tempoExecucao = tempoExecucao;
+        this.situacao = situacao;
+        this.problema = new Problema();
+        this.problema.setId(idProblema);
+        this.problema.setTitulo(tituloProblema);
+    }
+    
+    
+
     /**
      * Metodo que retorna uma {@link List} com todos as situações de uma
      * {@link Submissao} em formato {@link String}

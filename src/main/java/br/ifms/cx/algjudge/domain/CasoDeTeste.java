@@ -46,6 +46,22 @@ public class CasoDeTeste {
         this.executado = Boolean.FALSE;
     }
 
+    public CasoDeTeste(Long id, String entrada, String saida) {
+        this.id = id;
+        this.entrada = entrada;
+        this.saida = saida;
+    }
+
+    public CasoDeTeste(Long id, Boolean exemplo, String entrada, String saida) {
+        this.id = id;
+        this.exemplo = exemplo;
+        this.entrada = entrada;
+        this.ativo = ativo;
+        this.saida = saida;
+    }
+    
+    
+
     public Long getId() {
         return id;
     }

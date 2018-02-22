@@ -44,11 +44,23 @@ public class ProblemaResource {
             return Response.Error(ex.getMessage());
         }
     }
+    
+    @GET
+    @Path("/{id}")
+    @RolesAllowed({Usuario.PAPEL_ALUNO, Usuario.PAPEL_ADMINISTRADOR, Usuario.PAPEL_PROFESSOR})
+    public Problema getProblema(@PathParam("id") Long id) {
+        Problema p = db.buscarProblemaPorId(id);
+        if(p == null){
+            return null;
+        }
+        p.setExemplos(db.buscarExemplosDeCasosDeTestePorIdProblema(id));
+        return p;
+    }
 
     @GET
-    @Path("/list/{qtde}")
+    @Path("/list/{page}")
     @RolesAllowed({Usuario.PAPEL_ALUNO, Usuario.PAPEL_ADMINISTRADOR, Usuario.PAPEL_PROFESSOR})
-    public List<Problema> listarProblemas(@PathParam("qtde") Integer qtde) {
-        return db.listarProblemas(qtde);
+    public List<Problema> listarProblemas(@PathParam("page") Integer page) {
+        return db.listarProblemas(page);
     }
 }
