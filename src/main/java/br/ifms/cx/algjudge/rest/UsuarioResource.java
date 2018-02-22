@@ -2,6 +2,7 @@ package br.ifms.cx.algjudge.rest;
 
 import javax.ws.rs.core.Response;
 import br.ifms.cx.algjudge.dao.UsuarioDAO;
+import br.ifms.cx.algjudge.domain.ApplicationResponse;
 import br.ifms.cx.algjudge.domain.Usuario;
 import br.ifms.cx.algjudge.exception.EmailJaCadastradoException;
 import br.ifms.cx.algjudge.exception.SenhaInvalidaException;
@@ -55,9 +56,9 @@ public class UsuarioResource {
             }
             usuario.setPapel(Usuario.PAPEL_ALUNO);
             db.save(usuario);
-            return Response.status(200).entity("Usuário incluido com sucesso").build();
-        } catch (Exception ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
+            return ApplicationResponse.ok("Usuário incluido com sucesso");
+        } catch (EmailJaCadastradoException | SenhaInvalidaException ex) {
+            return ApplicationResponse.requisicaoInvalida(ex.getMessage());
         }
     }
 
@@ -99,27 +100,31 @@ public class UsuarioResource {
             usuario.setSenha(null);
             usuario.setToken(token);
             return Response.status(200).entity(usuario).build();
-        } catch (UsuarioInexistenteException ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
-        } catch (SenhaInvalidaException ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
+        } catch (UsuarioInexistenteException | SenhaInvalidaException ex) {
+            return ApplicationResponse.naoAutorizado(ex.getMessage());
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
+            return ApplicationResponse.erroInterno(ex.getMessage());
         }
     }
 
     @GET
     @Path("/{id}")
-    public Usuario getUsuario(@PathParam("id") Integer id) {
-        return db.get(id);
+    public Response getUsuario(@PathParam("id") Integer id) {
+        Usuario usuario = db.get(id);
+        if (usuario == null) {
+            return ApplicationResponse.naoEncontrado("Usuário não encontrado");
+        }
+        return ApplicationResponse.ok(usuario);
     }
 
     @GET
     @Path("/list/{papel}/{pag}/{qtd}")
-    public List<Usuario> getUsuarios(
+    public Response getUsuarios(
             @PathParam("papel") String papel,
             @PathParam("pag") Integer pag,
             @PathParam("qtd") Integer id) {
-        return db.listar(papel);
+
+        List<Usuario> usuarios = db.listar(papel);
+        return ApplicationResponse.ok(db.listar(papel));
     }
 }
