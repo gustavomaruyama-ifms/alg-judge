@@ -10,18 +10,21 @@ import br.ifms.cx.algjudge.dao.SubmissaoDAO;
 import br.ifms.cx.algjudge.dao.UsuarioDAO;
 import br.ifms.cx.algjudge.domain.CasoDeTeste;
 import br.ifms.cx.algjudge.domain.Juiz;
-import br.ifms.cx.algjudge.domain.Response;
+import br.ifms.cx.algjudge.domain.ApplicationResponse;
 import br.ifms.cx.algjudge.domain.Submissao;
 import br.ifms.cx.algjudge.domain.Usuario;
 import javax.annotation.security.RolesAllowed;
 import java.util.Date;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,7 +57,7 @@ public class SubmissaoResource {
         Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
         
         submissao.setUsuario(usuario);
-        submissao.setDataEnvio(new Date());
+        submissao.setDataEnvio(new Date().getTime());
         submissao.setSituacao(Submissao.SITUACAO_EM_EXECUCAO);
         submissaoDAO.salvarSubmissao(submissao);
         List<CasoDeTeste> casosDeTeste = problemaDAO.buscarCasoDeTestePorIdProblema(submissao.getProblema().getId());
@@ -63,6 +66,20 @@ public class SubmissaoResource {
         juiz.jugar(submissao, casosDeTeste);
         submissaoDAO.saveOrUpdate(submissao);
 
-        return Response.Ok(submissao.getSituacao());
+        return ApplicationResponse.ok(submissao.getSituacao());
+    }
+    
+    @GET
+    @Path("/list/{page}")
+    public Response getSubmissoes(@HeaderParam("idUsuario") String id, @PathParam("page") Integer page){
+        List<Submissao> submissoes = submissaoDAO.listarSubmissoesPorIdUsuario(new Long(id), page);
+        return ApplicationResponse.ok(submissoes);
+    }
+    
+    @GET
+    @Path("/list")
+    public Response getSubmissoesList(@HeaderParam("idUsuario") String id, @PathParam("page") Integer page){
+        List<Submissao> submissoes = submissaoDAO.listarSubmissoesPorIdUsuario(new Long(id));
+        return ApplicationResponse.ok(submissoes);
     }
 }

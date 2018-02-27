@@ -2,6 +2,7 @@ package br.ifms.cx.algjudge.rest;
 
 import javax.ws.rs.core.Response;
 import br.ifms.cx.algjudge.dao.UsuarioDAO;
+import br.ifms.cx.algjudge.domain.ApplicationResponse;
 import br.ifms.cx.algjudge.domain.Usuario;
 import br.ifms.cx.algjudge.exception.EmailJaCadastradoException;
 import br.ifms.cx.algjudge.exception.SenhaInvalidaException;
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -55,9 +57,9 @@ public class UsuarioResource {
             }
             usuario.setPapel(Usuario.PAPEL_ALUNO);
             db.save(usuario);
-            return Response.status(200).entity("Usuário incluido com sucesso").build();
-        } catch (Exception ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
+            return ApplicationResponse.ok("Usuário incluido com sucesso");
+        } catch (EmailJaCadastradoException | SenhaInvalidaException ex) {
+            return ApplicationResponse.requisicaoInvalida(ex.getMessage());
         }
     }
 
@@ -93,33 +95,65 @@ public class UsuarioResource {
             String token = JWT.create()
                     .withClaim("email", usuario.getEmail())
                     .withClaim("papel", usuario.getPapel())
-                    .withClaim("id", usuario.getId())
+                    .withClaim("idUsuario", usuario.getId().toString())
                     .sign(algorithm);
 
             usuario.setSenha(null);
             usuario.setToken(token);
             return Response.status(200).entity(usuario).build();
-        } catch (UsuarioInexistenteException ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
-        } catch (SenhaInvalidaException ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
+        } catch (UsuarioInexistenteException | SenhaInvalidaException ex) {
+            return ApplicationResponse.naoAutorizado(ex.getMessage());
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
-            return Response.status(404).entity(ex.getMessage()).build();
+            return ApplicationResponse.erroInterno(ex.getMessage());
         }
     }
 
     @GET
     @Path("/{id}")
-    public Usuario getUsuario(@PathParam("id") Integer id) {
-        return db.get(id);
+    public Response getUsuario(@PathParam("id") Integer id) {
+        Usuario usuario = db.get(id);
+        if (usuario == null) {
+            return ApplicationResponse.naoEncontrado("Usuário não encontrado");
+        }
+        return ApplicationResponse.ok(usuario);
     }
 
     @GET
     @Path("/list/{papel}/{pag}/{qtd}")
-    public List<Usuario> getUsuarios(
+    public Response getUsuarios(
             @PathParam("papel") String papel,
             @PathParam("pag") Integer pag,
             @PathParam("qtd") Integer id) {
-        return db.listar(papel);
+        List<Usuario> usuarios = db.listar(papel);
+        return ApplicationResponse.ok(db.listar(papel));
+    }
+    
+    @PUT
+    @Transactional
+    public Response atualizarUsuario(Usuario usuario, @HeaderParam("papel") String papel, @HeaderParam("id")Integer id) {
+        Usuario user = db.get(usuario.getId());
+        if (user.getPapel().equalsIgnoreCase(papel)) {
+            try {
+            db.updateUsuario(usuario, usuario.getId());
+                 
+            usuario = db.get(usuario.getId());
+            Algorithm algorithm = Algorithm.HMAC256("qawsedrftgyhjuhygtfrvfbgnhvf4651554sa64c1we51651ewc1we51");
+            String token = JWT.create()
+                    .withClaim("email", usuario.getEmail())
+                    .withClaim("papel", usuario.getPapel())
+                    .withClaim("idUsuario", usuario.getId().toString())
+                    .sign(algorithm);
+
+            usuario.setSenha(null);
+            usuario.setToken(token);
+            
+            return Response.status(200).entity(usuario).build();
+        
+            } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
+            return ApplicationResponse.erroInterno(ex.getMessage());
+        }
+        } else {
+          return ApplicationResponse.naoEncontrado("Usuário não encontrado");
+        }
     }
 }

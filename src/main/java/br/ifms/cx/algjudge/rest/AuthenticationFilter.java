@@ -113,7 +113,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
             
             String papel = jwt.getClaim("papel").asString();
             String email = jwt.getClaim("email").asString();
-            String id = jwt.getClaim("id").asString();
+            String id = jwt.getClaim("idUsuario").asString();
             
             Set<String> rolesSet;
             RolesAllowed rolesAnnotation; 
@@ -127,7 +127,7 @@ public class AuthenticationFilter implements javax.ws.rs.container.ContainerRequ
                 verificarPapel(papel, rolesSet, requestContext);
             }
             headers.add("email", email);
-            headers.add("id", id);
+            headers.add("idUsuario", id);
             headers.add("papel", papel); 
         } catch (IllegalArgumentException | UnsupportedEncodingException ex) {
             Logger.getLogger(AuthenticationFilter.class.getName()).log(Level.SEVERE, null, ex);

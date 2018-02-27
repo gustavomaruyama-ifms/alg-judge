@@ -35,8 +35,7 @@ public class Submissao implements Serializable {
     private Long id;
     @Column(length = 50000)
     private String codigoFonte;
-    @Temporal(TemporalType.DATE)
-    private Date dataEnvio;
+    private Long dataEnvio;
     private Long tempoExecucao;
     @Column(nullable = false)
     private String situacao;
@@ -50,6 +49,19 @@ public class Submissao implements Serializable {
     public Submissao() {
         this.ativo = Boolean.TRUE;
     }
+
+    public Submissao(Long id, String codigoFonte, Long dataEnvio, Long tempoExecucao, String situacao, Long idProblema, String tituloProblema) {
+        this.id = id;
+        this.codigoFonte = codigoFonte;
+        this.dataEnvio = dataEnvio;
+        this.tempoExecucao = tempoExecucao;
+        this.situacao = situacao;
+        this.problema = new Problema();
+        this.problema.setId(idProblema);
+        this.problema.setTitulo(tituloProblema);
+    }
+    
+    
 
     /**
      * Metodo que retorna uma {@link List} com todos as situações de uma
@@ -85,11 +97,11 @@ public class Submissao implements Serializable {
         this.codigoFonte = codigoFonte;
     }
 
-    public Date getDataEnvio() {
+    public Long getDataEnvio() {
         return dataEnvio;
     }
 
-    public void setDataEnvio(Date dataEnvio) {
+    public void setDataEnvio(Long dataEnvio) {
         this.dataEnvio = dataEnvio;
     }
 

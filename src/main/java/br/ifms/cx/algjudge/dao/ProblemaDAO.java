@@ -2,6 +2,7 @@ package br.ifms.cx.algjudge.dao;
 
 import br.ifms.cx.algjudge.domain.CasoDeTeste;
 import br.ifms.cx.algjudge.domain.Problema;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Component;
@@ -68,8 +69,17 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public List<Problema> listarProblemas(Integer qtde) {
-        Query query = super.createQuery("select p from Problema p where p.ativo is true");
+    public List<Problema> listarProblemas(Integer page) {
+        page--;
+        Query query = super.createQuery("from Problema as p where p.ativo = true");
+        query.setFirstResult(page*10);
+        query.setMaxResults(10);
+        return query.list();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<Problema> listarTodosProblemas() {
+        Query query = super.createQuery("from Problema as p where p.ativo = true");
         return query.list();
     }
 
@@ -78,5 +88,10 @@ public class ProblemaDAO extends HibernateDAO<Problema> {
         query.setParameter("id", idProblema);
         return query.list();
     }
-
+    
+    public List<CasoDeTeste> buscarExemplosDeCasosDeTestePorIdProblema(Long idProblema) {
+        Query query = super.createQuery("SELECT new CasoDeTeste(c.id, c.entrada, c.saida) from CasoDeTeste as c where c.problema.id = :id and c.exemplo = true and c.ativo = true");
+        query.setParameter("id", idProblema);
+        return query.list();
+    }
 }

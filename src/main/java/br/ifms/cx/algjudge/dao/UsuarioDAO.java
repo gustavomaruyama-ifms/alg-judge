@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UsuarioDAO extends HibernateDAO<Usuario> {
+    
+    private Usuario usuario;
 
     public UsuarioDAO() {
         super(Usuario.class);
@@ -85,17 +87,13 @@ public class UsuarioDAO extends HibernateDAO<Usuario> {
      * @param usuario
      * @param id
      */
-    public void updateUsuario(Usuario usuario, Integer id) {
-
-        Usuario user = new Usuario();
-
-        user = super.get(id);
-
-        user.setNome(usuario.getNome());
-        user.setSenha(usuario.getSenha());
-        user.setEmail(usuario.getEmail());
-        user.setPapel(usuario.getPapel());
-
-        super.update(user);
+    public void updateUsuario(Usuario usuario, Long id) {
+        
+        this.usuario = super.get(id);
+        this.usuario.setNome(usuario.getNome());
+        this.usuario.setEmail(usuario.getEmail());
+        this.usuario.setSenha(usuario.getSenha());
+        
+        super.update(this.usuario);
     }
 }

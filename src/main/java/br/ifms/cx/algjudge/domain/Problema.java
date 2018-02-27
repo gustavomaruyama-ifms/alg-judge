@@ -6,12 +6,16 @@
 package br.ifms.cx.algjudge.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 /**
  * Classe de modelo de dados da entidade Problema
@@ -26,14 +30,16 @@ public class Problema implements Serializable {
     @GeneratedValue(generator = "gen_seq_problema", strategy = GenerationType.SEQUENCE)
     private Long id;
     private String titulo;
-    @Column(length = 50000)
+    @Column(length = 5000000)
     private String descricao;
-    @Column(length = 5000)
+    @Column(length = 5000000)
     private String descricaoEntrada;
-    @Column(length = 5000)
+    @Column(length = 5000000)
     private String descricaoSaida;
     @Column(nullable = false)
     private Boolean ativo;
+    @Transient
+    private List<CasoDeTeste> exemplos;
 
     public Problema() {
         this.ativo = Boolean.TRUE;
@@ -85,5 +91,13 @@ public class Problema implements Serializable {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public List<CasoDeTeste> getExemplos() {
+        return exemplos;
+    }
+
+    public void setExemplos(List<CasoDeTeste> exemplos) {
+        this.exemplos = exemplos;
     }
 }
